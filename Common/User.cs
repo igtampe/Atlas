@@ -31,7 +31,5 @@ namespace Atlas.Common {
         /// <summary>Whether or not this user is allowed to upload images to the server</summary>
         public bool IsUploader { get; set; } = false;
 
-        //-[Overrides]-
-
     }
 }
