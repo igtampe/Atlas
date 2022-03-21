@@ -46,7 +46,7 @@ namespace Atlas.Common {
         /// <summary>Checks if a User can edit this article</summary>
         /// <param name="U"></param>
         /// <returns></returns>
-        public bool CanEdit(User U) => U.EditLevel >= EditLevel;
+        public bool CanEdit(User U) => U.EditLevel >= EditLevel || U.IsAdmin;
 
         /// <summary>Converts Atlas format text into Atlas Sections</summary>
         /// <param name="Text"></param>
