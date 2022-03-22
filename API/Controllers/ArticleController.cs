@@ -160,6 +160,7 @@ namespace Atlas.API.Controllers {
         /// <param name="SessionID"></param>
         /// <param name="Title"></param>
         /// <returns></returns>
+        [HttpDelete("{Title}")]
         public async Task<IActionResult> Delete([FromHeader] Guid? SessionID, [FromRoute] string Title) {
 
             var E = await GetEditor(SessionID);
