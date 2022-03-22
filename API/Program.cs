@@ -24,7 +24,7 @@ builder.Services.AddSwaggerGen(options => {
             //Url = new Uri("https://example.com/license") //TODO: Actually specify the license once this is done
         }
     });
-    options.IncludeXmlComments("./API.xml");
+    options.IncludeXmlComments("./Atlas.API.xml");
 });
 
 builder.Services.AddDbContext<AtlasContext>();

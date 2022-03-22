@@ -7,6 +7,7 @@
     <RootNamespace>Atlas.$(MSBuildProjectName.Replace(" ", "_"))</RootNamespace>
     <GenerateDocumentationFile>True</GenerateDocumentationFile>
     <AssemblyName>Atlas.$(MSBuildProjectName)</AssemblyName>
+    <DocumentationFile>./Atlas.API.xml</DocumentationFile>
   </PropertyGroup>
 
   <ItemGroup>
