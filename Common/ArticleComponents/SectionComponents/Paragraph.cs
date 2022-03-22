@@ -69,7 +69,7 @@
 
             Paragraph P = new();
 
-            if (Text[0..4].ToUpper()=="[IMG") {
+            if (Text.Length > 5 && Text[0..4].ToUpper()=="[IMG") {
                 //Find the index of the closing ]
                 int EB = Text.IndexOf(']');
                 if (EB == -1) { Text = Text[1..]; } 
