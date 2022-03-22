@@ -5,6 +5,7 @@
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
     <RootNamespace>Atlas.$(MSBuildProjectName.Replace(" ", "_"))</RootNamespace>
+    <AssemblyName>Atlas.$(MSBuildProjectName)</AssemblyName>
   </PropertyGroup>
 
   <ItemGroup>
