@@ -37,10 +37,9 @@
             <param name="NewEditLevel"></param>
             <returns></returns>
         </member>
-        <member name="M:Atlas.API.Controllers.ArticleController.Create(System.Nullable{System.Guid},System.String,System.String,System.Nullable{System.Boolean})">
+        <member name="M:Atlas.API.Controllers.ArticleController.Create(System.Nullable{System.Guid},System.String,System.Nullable{System.Boolean})">
             <summary>Handles Creating articles, and optionally saving them to the DB</summary>
             <param name="SessionID">ID of the session executing this request</param>
-            <param name="Text">Text of this new article</param>
             <param name="Title">Title of this new article</param>
             <param name="Save">Whether or not to save this article to the DB</param>
             <returns></returns>
