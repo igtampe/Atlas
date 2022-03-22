@@ -19,7 +19,7 @@ namespace Atlas.API.Controllers {
         public UserController(AtlasContext Context) => DB = Context;
 
         #region Gets
-        /// <summary>Gets a directory of this Neco server</summary>
+        /// <summary>Gets a directory of this Atlas server</summary>
         /// <param name="Query">Search query to search in IDs and </param>
         /// <param name="Take"></param>
         /// <param name="Skip"></param>
@@ -179,7 +179,7 @@ namespace Atlas.API.Controllers {
         #region Posts
 
         // POST api/Users
-        /// <summary>Handles logging in to Clothespin</summary>
+        /// <summary>Handles logging in to Atlas</summary>
         /// <param name="Request">Request with a User and Password attempt to log in</param>
         /// <returns></returns>
         [HttpPost]
