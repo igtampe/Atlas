@@ -10,9 +10,6 @@ namespace Atlas.Common {
         [Key]
         public string Username { get; set; } = "";
 
-        /// <summary>Name of this user</summary>
-        public string Name { get; set; } = "";
-
         /// <summary>Profile picture of this user</summary>
         public string ImageURL { get; set; } = "";
 
