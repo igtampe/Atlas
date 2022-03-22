@@ -28,5 +28,17 @@ namespace Atlas.Common {
         /// <summary>Whether or not this user is allowed to upload images to the server</summary>
         public bool IsUploader { get; set; } = false;
 
+        //-[Overrides]-
+
+        /// <summary>Checks if a user is equal to another object</summary>
+        /// <param name="obj"></param>
+        /// <returns>True if and only if the object is a user and its username is the same as this one's username</returns>
+        public override bool Equals(object? obj) => obj is User U && U.Username==Username;
+
+        /// <summary>Gets the hashcode for this user</summary>
+        /// <returns>Delegates to Username's hashcode function</returns>
+        public override int GetHashCode() => Username.GetHashCode();
+    }
+
     }
 }
