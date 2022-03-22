@@ -1,0 +1,320 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Atlas.API</name>
+    </assembly>
+    <members>
+        <member name="T:Atlas.API.Controllers.ArticleController">
+            <summary>Controller that handles User operations</summary>
+        </member>
+        <member name="M:Atlas.API.Controllers.ArticleController.#ctor(Atlas.Data.AtlasContext)">
+            <summary>Creates a User Controller</summary>
+            <param name="Context"></param>
+        </member>
+        <member name="M:Atlas.API.Controllers.ArticleController.Directory(System.String,System.Nullable{System.Int32},System.Nullable{System.Int32})">
+            <summary>Gets a list of all articles on this Atlas server</summary>
+            <param name="Query">Search query to search in IDs and </param>
+            <param name="Take"></param>
+            <param name="Skip"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Atlas.API.Controllers.ArticleController.GetArticleEntry(System.String)">
+            <summary>Gets a given Article</summary>
+            <param name="Title"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Atlas.API.Controllers.ArticleController.Update(System.Nullable{System.Guid},System.String,System.String)">
+            <summary>Handles updating Articles</summary>
+            <param name="SessionID">ID of the session executing this request</param>
+            <param name="Text">New text for this article</param>
+            <param name="Title">Title of the article to edit</param>
+            <returns></returns>
+        </member>
+        <member name="M:Atlas.API.Controllers.ArticleController.UpdateEditLevel(System.Nullable{System.Guid},System.String,System.Int32)">
+            <summary>Request to change an Article's Editing level</summary>
+            <param name="SessionID"></param>
+            <param name="Title"></param>
+            <param name="NewEditLevel"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Atlas.API.Controllers.ArticleController.Create(System.Nullable{System.Guid},System.String,System.String,System.Nullable{System.Boolean})">
+            <summary>Handles Creating articles, and optionally saving them to the DB</summary>
+            <param name="SessionID">ID of the session executing this request</param>
+            <param name="Text">Text of this new article</param>
+            <param name="Title">Title of this new article</param>
+            <param name="Save">Whether or not to save this article to the DB</param>
+            <returns></returns>
+        </member>
+        <member name="M:Atlas.API.Controllers.ArticleController.Delete(System.Nullable{System.Guid},System.String)">
+            <summary>Deletes an article from the DB</summary>
+            <param name="SessionID"></param>
+            <param name="Title"></param>
+            <returns></returns>
+        </member>
+        <member name="T:Atlas.API.Controllers.ImageController">
+            <summary>Controller that handles User operations</summary>
+        </member>
+        <member name="M:Atlas.API.Controllers.ImageController.#ctor(Atlas.Data.AtlasContext)">
+            <summary>Creates a User Controller</summary>
+            <param name="Context"></param>
+        </member>
+        <member name="M:Atlas.API.Controllers.ImageController.GetImage(System.Guid)">
+            <summary>Gets an image from the DB</summary>
+            <param name="ID">ID of the image to retrieve</param>
+            <returns></returns>
+        </member>
+        <member name="M:Atlas.API.Controllers.ImageController.UploadImage(System.Guid)">
+            <summary>Uploads an Image to the DB.</summary>
+            <param name="SessionID">ID of the session executing this request</param>
+            <returns></returns>
+        </member>
+        <member name="T:Atlas.API.Controllers.UserController">
+            <summary>Controller that handles User operations</summary>
+        </member>
+        <member name="M:Atlas.API.Controllers.UserController.#ctor(Atlas.Data.AtlasContext)">
+            <summary>Creates a User Controller</summary>
+            <param name="Context"></param>
+        </member>
+        <member name="M:Atlas.API.Controllers.UserController.Directory(System.String,System.Nullable{System.Int32},System.Nullable{System.Int32})">
+            <summary>Gets a directory of this Atlas server</summary>
+            <param name="Query">Search query to search in IDs and </param>
+            <param name="Take"></param>
+            <param name="Skip"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Atlas.API.Controllers.UserController.GetCurrentLoggedIn(System.Nullable{System.Guid})">
+            <summary>Gets username of the currently logged in session</summary>
+            <param name="SessionID">ID of the session</param>
+            <returns></returns>
+        </member>
+        <member name="M:Atlas.API.Controllers.UserController.GetUser(System.String)">
+            <summary>Gets a given user</summary>
+            <param name="ID"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Atlas.API.Controllers.UserController.Update(System.Nullable{System.Guid},Atlas.API.Requests.ChangePasswordRequest)">
+            <summary>Handles user password changes</summary>
+            <param name="Request">Request with their current and new password</param>
+            <param name="SessionID">ID of the session executing this request</param>
+            <returns></returns>
+        </member>
+        <member name="M:Atlas.API.Controllers.UserController.UpdateRoles(System.Nullable{System.Guid},System.String,Atlas.API.Requests.ChangeRoleRequest)">
+            <summary>Request to change a user's roles</summary>
+            <param name="SessionID"></param>
+            <param name="ID"></param>
+            <param name="Request"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Atlas.API.Controllers.UserController.ResetPassword(System.Nullable{System.Guid},System.String,Atlas.API.Requests.ChangePasswordRequest)">
+            <summary>Request to reset the password of a user</summary>
+            <param name="SessionID">SessionID of an administrator who wishes to change the password of another user</param>
+            <param name="ID">ID of the user to change the password of</param>
+            <param name="Request">Request to change</param>
+            <returns></returns>
+        </member>
+        <member name="M:Atlas.API.Controllers.UserController.UpdateImage(System.Nullable{System.Guid},System.String)">
+            <summary>Updates the image of the user with this session</summary>
+            <param name="SessionID"></param>
+            <param name="ImageURL"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Atlas.API.Controllers.UserController.LogIn(Atlas.API.Requests.LoginRequest)">
+            <summary>Handles logging in to Atlas</summary>
+            <param name="Request">Request with a User and Password attempt to log in</param>
+            <returns></returns>
+        </member>
+        <member name="M:Atlas.API.Controllers.UserController.Register(Atlas.API.Requests.LoginRequest)">
+            <summary>Handles user registration</summary>
+            <param name="Request">User and password combination to create</param>
+            <returns></returns>
+        </member>
+        <member name="M:Atlas.API.Controllers.UserController.LogOut(System.Guid)">
+            <summary>Handles user logout</summary>
+            <param name="SessionID">Session to log out of</param>
+            <returns></returns>
+        </member>
+        <member name="M:Atlas.API.Controllers.UserController.LogOutAll(System.Guid)">
+            <summary>Handles user logout of *all* sessions</summary>
+            <param name="SessionID">Session that wants to log out of all tied sessions</param>
+            <returns></returns>
+        </member>
+        <member name="T:Atlas.API.ErrorResult">
+            <summary>Object that represents an error result from the API <br/><br/> 
+            This is mostly here to make it easier for the frontend to determine if there was an error with their request when the default return is an object.
+            </summary>
+            Further explanation: 
+             
+             Because of the way we parse returns as either .text() or .json(), having a usual return be an object but an error result be text can make it difficult for the body of the
+             result to be parsed correctly, even if we know there's been an error. So, to make my life a little easier, let's do this instead.
+             
+             I'm sure there's a better way to do this but this is a relatively quick and easy fix. Plus we get to specify additional data:
+             This could probably be an anonymous type generated at error but may as well make a reusable object.
+            *
+        </member>
+        <member name="P:Atlas.API.ErrorResult.Code">
+            <summary>Code for this error</summary>
+        </member>
+        <member name="P:Atlas.API.ErrorResult.Error">
+            <summary>Error flag set to true to make it easier for the frontend to realize there's been an error</summary>
+        </member>
+        <member name="P:Atlas.API.ErrorResult.Reason">
+            <summary>Reason for the error</summary>
+        </member>
+        <member name="P:Atlas.API.ErrorResult.Field">
+            <summary>Field that is most likely responsible for this error</summary>
+        </member>
+        <member name="M:Atlas.API.ErrorResult.NotFound(System.String,System.String)">
+            <summary>Generates a NotFound Error Result</summary>
+            <param name="Reason">Reason for the error</param>
+            <param name="Field">Field most likely responsible for the error</param>
+            <returns></returns>
+        </member>
+        <member name="M:Atlas.API.ErrorResult.Unauthorized(System.String,System.String)">
+            <summary>Generates a Unauthorized Error Result</summary>
+            <param name="Reason">Reason for the error</param>
+            <param name="Field">Field most likely responsible for the error</param>
+            <returns></returns>
+        </member>
+        <member name="M:Atlas.API.ErrorResult.Forbidden(System.String,System.String)">
+            <summary>Generates a Forbidden Error Result</summary>
+            <param name="Reason">Reason for the error</param>
+            <param name="Field">Field most likely responsible for the error</param>
+            <returns></returns>
+        </member>
+        <member name="M:Atlas.API.ErrorResult.ForbiddenRoles(System.String)">
+            <summary>Generates a Forbidden Error Result due to missing roles</summary>
+            <param name="Roles"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Atlas.API.ErrorResult.BadRequest(System.String,System.String)">
+            <summary>Generates a Bad Request Error Result</summary>
+            <param name="Reason">Reason for the error</param>
+            <param name="Field">Field most likely responsible for the error</param>
+            <returns></returns>
+        </member>
+        <member name="M:Atlas.API.ErrorResult.ServerError(System.String,System.String)">
+            <summary>Generates a Server Error Result</summary>
+            <param name="Reason">Reason for the error</param>
+            <param name="Field">Field most likely responsible for the error</param>
+            <returns></returns>
+        </member>
+        <member name="T:Atlas.API.ErrorResult.Reusable">
+            <summary>Reusable error results</summary>
+        </member>
+        <member name="P:Atlas.API.ErrorResult.Reusable.InvalidSession">
+            <summary>Error Result due to an invalid or expired session</summary>
+        </member>
+        <member name="T:Atlas.API.Requests.ChangePasswordRequest">
+            <summary>Request to change a password</summary>
+        </member>
+        <member name="P:Atlas.API.Requests.ChangePasswordRequest.Current">
+            <summary>Current password</summary>
+        </member>
+        <member name="P:Atlas.API.Requests.ChangePasswordRequest.New">
+            <summary>New Password</summary>
+        </member>
+        <member name="T:Atlas.API.Requests.ChangeRoleRequest">
+            <summary>Request to change a user's roles</summary>
+        </member>
+        <member name="P:Atlas.API.Requests.ChangeRoleRequest.IsAdmin">
+            <summary>Whether or not this user is an Administrator</summary>
+        </member>
+        <member name="P:Atlas.API.Requests.ChangeRoleRequest.EditLevel">
+            <summary>User's edit level</summary>
+        </member>
+        <member name="P:Atlas.API.Requests.ChangeRoleRequest.IsUploader">
+            <summary>Whether or not this user is allowed to upload images to the database</summary>
+        </member>
+        <member name="T:Atlas.API.Requests.LoginRequest">
+            <summary>Request to log in to Neco </summary>
+        </member>
+        <member name="P:Atlas.API.Requests.LoginRequest.Username">
+            <summary>Username of this user</summary>
+        </member>
+        <member name="P:Atlas.API.Requests.LoginRequest.Password">
+            <summary>Password of the user</summary>
+        </member>
+        <member name="T:Igtampe.ChopoSessionManager.Session">
+            <summary>Holds a Neco Session</summary>
+        </member>
+        <member name="P:Igtampe.ChopoSessionManager.Session.ID">
+            <summary>ID of this session</summary>
+        </member>
+        <member name="P:Igtampe.ChopoSessionManager.Session.ExpirationDate">
+            <summary>Time at which this session will no longer be valid</summary>
+        </member>
+        <member name="P:Igtampe.ChopoSessionManager.Session.UserID">
+            <summary>User tied to this Session</summary>
+        </member>
+        <member name="P:Igtampe.ChopoSessionManager.Session.Expired">
+            <summary>Whether or not this session is expired.</summary>
+        </member>
+        <member name="M:Igtampe.ChopoSessionManager.Session.#ctor(System.String)">
+            <summary>Creates a session for the given UserID</summary>
+            <param name="UserID"></param>
+        </member>
+        <member name="M:Igtampe.ChopoSessionManager.Session.ExtendSession">
+            <summary>Extends the Session expiration date to 15 minutes after now</summary>
+        </member>
+        <member name="M:Igtampe.ChopoSessionManager.Session.Equals(System.Object)">
+            <summary>Compares this Session to another object</summary>
+            <param name="obj"></param>
+            <returns>True if and only if object is a session and the ID matches</returns>
+        </member>
+        <member name="M:Igtampe.ChopoSessionManager.Session.GetHashCode">
+            <summary>Gets hashcode for this session</summary>
+            <returns><see cref="P:Igtampe.ChopoSessionManager.Session.ID"/>'s hashcode</returns>
+        </member>
+        <member name="T:Igtampe.ChopoSessionManager.SessionManager">
+            <summary>Session Manager for Neco</summary>
+        </member>
+        <member name="F:Igtampe.ChopoSessionManager.SessionManager.SingletonSM">
+            <summary>Internal Singleton Session Manager object</summary>
+        </member>
+        <member name="P:Igtampe.ChopoSessionManager.SessionManager.Manager">
+            <summary>Gets the static, singleton session manager for Neco</summary>
+        </member>
+        <member name="F:Igtampe.ChopoSessionManager.SessionManager.Sessions">
+            <summary>Collection of all sessions in this manager</summary>
+        </member>
+        <member name="P:Igtampe.ChopoSessionManager.SessionManager.Count">
+            <summary>Amount of sessions in the collection (including those that are expired)</summary>
+        </member>
+        <member name="M:Igtampe.ChopoSessionManager.SessionManager.#ctor">
+            <summary>Internal constructor to create a session manager</summary>
+        </member>
+        <member name="M:Igtampe.ChopoSessionManager.SessionManager.LogIn(System.String)">
+            <summary>Logs specified user in to a new session.</summary>
+            <param name="UserID">ID of the user to sign in</param>
+            <returns>GUID of the added session</returns>
+        </member>
+        <member name="M:Igtampe.ChopoSessionManager.SessionManager.FindSession(System.Guid)">
+            <summary>Returns a session with sepcified ID. 
+            If the Session is expired, it returns null, and removes the session from the collection.
+            Otherwise, it extends the session before returning it.</summary>
+            <param name="ID"></param>
+            <returns>Returns a session if one exists, if not NULL</returns>
+        </member>
+        <member name="M:Igtampe.ChopoSessionManager.SessionManager.ExtendSession(System.Guid)">
+            <summary>Extends a session with given UID</summary>
+            <returns>True if a session was found and it was able to be extended. False otherwise</returns>
+        </member>
+        <member name="M:Igtampe.ChopoSessionManager.SessionManager.LogOut(System.Guid)">
+            <summary>Removes a session with specified ID</summary>
+            <param name="ID"></param>
+            <returns>Returns true if the session was found and was removed, false otherwise</returns>
+        </member>
+        <member name="M:Igtampe.ChopoSessionManager.SessionManager.LogOutAll(System.String)">
+            <summary>Removes all sessions for the specified user</summary>
+            <param name="UserID"></param>
+            <returns>Number of sessions logged out of</returns>
+        </member>
+        <member name="M:Igtampe.ChopoSessionManager.SessionManager.RemoveExpiredSessions">
+            <summary>Removes all expired sessions from the collection of active sessions</summary>
+            <returns>Amount of removed sessions</returns>
+        </member>
+        <member name="M:Igtampe.ChopoSessionManager.SessionManager.SessionRemoverThread(System.Int32)">
+            <summary>Routine to periodically remove all expired sessions from the collection</summary>
+        </member>
+    </members>
+</doc>
