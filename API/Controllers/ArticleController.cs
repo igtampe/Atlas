@@ -41,7 +41,6 @@ namespace Atlas.API.Controllers {
             return Ok(await Set.ToListAsync());
         }
 
-
         /// <summary>Gets a given Article</summary>
         /// <param name="Title"></param>
         /// <returns></returns>
