@@ -38,7 +38,7 @@ namespace Atlas.Common {
         /// <summary>Gets the hashcode for this user</summary>
         /// <returns>Delegates to Username's hashcode function</returns>
         public override int GetHashCode() => Username.GetHashCode();
-    }
+    
 
     }
 }
