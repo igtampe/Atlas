@@ -17,7 +17,7 @@ namespace Atlas.Common {
         /// <summary>Text of this article</summary>
         public string Text {
             get => text; //Retrieve text
-            set { text = value; Sections = MakeArticle(value); } //Set the text, clear the sections
+            set { text = value; ParseText(); } //Set the text, clear the sections
         }
 
         /// <summary>Date this article was created</summary>
@@ -41,7 +41,7 @@ namespace Atlas.Common {
 
         /// <summary>List of atlas sections in this article</summary>
         [NotMapped]
-        public List<Section>? Sections { get; set; } = null;
+        public Section? MainSection { get; set; } = null;
 
         /// <summary>Checks if a User can edit this article</summary>
         /// <param name="U"></param>
@@ -49,20 +49,22 @@ namespace Atlas.Common {
         public bool CanEdit(User U) => U.EditLevel >= EditLevel || U.IsAdmin;
 
         /// <summary>Converts Atlas format text into Atlas Sections</summary>
-        /// <param name="Text"></param>
         /// <returns></returns>
-        private static List<Section> MakeArticle(string Text) {
+        private void ParseText() {
+
+            Sidebar = null;
+            MainSection = null;
 
             //Get the Sidebar
             Match SidebarMatch = Regex.Match(Text, ">{.*}\\n(.*\\n)*>");
             if (SidebarMatch.Success) {
-
                 //We've got the sidebar!
-
+                Sidebar = Section.MakeSection(SidebarMatch.Value[1..(SidebarMatch.Value.Length-2)]);
+                Text = Text.Replace(SidebarMatch.Value, "");
             }
 
-            return new();
-
+            MainSection = Section.MakeSection(Text,0);
+            
         }
     }
 }
