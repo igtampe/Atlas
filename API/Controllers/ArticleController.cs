@@ -120,19 +120,19 @@ namespace Atlas.API.Controllers {
         // POST api/Users
         /// <summary>Handles Creating articles, and optionally saving them to the DB</summary>
         /// <param name="SessionID">ID of the session executing this request</param>
-        /// <param name="Text">Text of this new article</param>
         /// <param name="Title">Title of this new article</param>
         /// <param name="Save">Whether or not to save this article to the DB</param>
         /// <returns></returns>
         [HttpPost("{Title}")]
-        public async Task<IActionResult> Create([FromHeader] Guid? SessionID, [FromRoute] string Title, [FromBody] string Text, [FromQuery] bool? Save) {
+        public async Task<IActionResult> Create([FromHeader] Guid? SessionID, [FromRoute] string Title, [FromQuery] bool? Save) {
+
+            string Text = await new StreamReader(Request.Body).ReadToEndAsync();
 
             var E = await GetEditor(SessionID);
             if (E.Item2 is not null) { return E.Item2; }
             User Editor = E.Item1;
 
-            if (GetArticle(Title) is not null) { return BadRequest(ErrorResult.BadRequest("An article with this title already exists!")); }
-
+            
             Article R = new() {
                 Title = Title, Text = Text,
                 DateCreated = DateTime.UtcNow,
@@ -143,6 +143,7 @@ namespace Atlas.API.Controllers {
             };
 
             if (Save ?? false) {
+                if (GetArticle(Title) is not null) { return BadRequest(ErrorResult.BadRequest("An article with this title already exists!")); }
                 DB.Add(R);
                 await DB.SaveChangesAsync();
             }
