@@ -23,10 +23,9 @@
             <param name="Title"></param>
             <returns></returns>
         </member>
-        <member name="M:Atlas.API.Controllers.ArticleController.Update(System.Nullable{System.Guid},System.String,System.String)">
+        <member name="M:Atlas.API.Controllers.ArticleController.Update(System.Nullable{System.Guid},System.String)">
             <summary>Handles updating Articles</summary>
             <param name="SessionID">ID of the session executing this request</param>
-            <param name="Text">New text for this article</param>
             <param name="Title">Title of the article to edit</param>
             <returns></returns>
         </member>
