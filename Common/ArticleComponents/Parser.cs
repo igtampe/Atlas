@@ -8,10 +8,9 @@ namespace Atlas.Common.ArticleComponents {
 
         /// <summary>Parses a section</summary>
         /// <param name="Text"></param>
-        /// <param name="Level"></param>
         /// <param name="GlobalLogger"></param>
         /// <returns></returns>
-        public static List<object> ParseText(string Text, int Level = 0, Logger? GlobalLogger = null) {
+        public static List<object> ParseText(string Text, Logger? GlobalLogger = null) {
 
             GlobalLogger?.Debug("Commencing parsing of text");
             
@@ -42,7 +41,7 @@ namespace Atlas.Common.ArticleComponents {
                 string Element = Text[0..EndElement];
                 //We now have the bounds of the element
 
-                Match CurMatch = Regex.Match(Element.Length >= 3 ? Element[0..2] : Text, "(\\|\\||\\|-\\||\\[|-|#|=)");
+                Match CurMatch = Regex.Match(Element.Length >= 3 ? Element[0..2] : Text, "(\\|\\||\\|I\\||\\[|-|#|=)");
 
                 if (CurMatch.Success) {
 
@@ -59,7 +58,7 @@ namespace Atlas.Common.ArticleComponents {
                             GlobalLogger?.Debug($"Found a Table");
                             O.Add(Table.MakeTable(Element, GlobalLogger));
                             break;
-                        case "|-|":
+                        case "|I|":
                             //We have an ImageGrid
                             GlobalLogger?.Debug($"Found an ImageGrid");
                             O.Add(ImageGrid.MakeGrid(Element, GlobalLogger));
@@ -77,7 +76,6 @@ namespace Atlas.Common.ArticleComponents {
                             O.Add(Paragraph.MakeParagraph(Element, GlobalLogger));
                             break;
                     }
-
                 } else {
                     //There are no more special characters. with what's left and return
                     GlobalLogger?.Debug($"No special characters were found. Assuming a paragraph");
