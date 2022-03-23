@@ -34,7 +34,7 @@ Oh my god there's a chopo on the left
 [IMG | This is the alt text | https://avatars.githubusercontent.com/u/49919240 | boo | RIGHT]
 AH! Another chopo! This time on the right! Que locura!\nThis time with multiple lines here on the side!
 
-|-|The Chopo Army Image Grid Grid
+|I|The Chopo Army Image Grid Grid
 [IMG | This is the alt text | https://avatars.githubusercontent.com/u/49919240 | HA HA HA | 2]
 [IMG | This is the alt text | https://avatars.githubusercontent.com/u/49919240 | HA HA HA | 2]
 [IMG | This is the alt text | https://avatars.githubusercontent.com/u/49919240 | HA HA HA | 2]
@@ -92,5 +92,5 @@ Also a section,
 ";
 
 Atlas.Common.Article A = new() {
-    Text = SmallTest
+    Text = FullTest
 };
