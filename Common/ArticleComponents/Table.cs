@@ -70,7 +70,7 @@ namespace Atlas.Common.ArticleComponents {
             if (!string.IsNullOrWhiteSpace(RowTexts[1].Replace("|", ""))) { T.HeaderRow = MakeRow(RowTexts[1]); }
 
             GlobalLogger?.Debug($"Processing Rows");
-            foreach (string RowText in RowTexts[2..]) { T.Rows.Add(MakeRow(RowText));}
+            foreach (string RowText in RowTexts[2..]) { if (!string.IsNullOrWhiteSpace(RowText)) { T.Rows.Add(MakeRow(RowText)); } }
 
             GlobalLogger?.Debug($"Done, Adios");
 
@@ -84,7 +84,7 @@ namespace Atlas.Common.ArticleComponents {
 
             // Split the text
             string[] CellTexts = Text.Split('|');
-            foreach (string CellText in CellTexts) { R.Cells.Add(new(CellText.TrimStart().TrimEnd())); }
+            foreach (string CellText in CellTexts[..(CellTexts.Length-1)]) { R.Cells.Add(new(CellText.TrimStart().TrimEnd())); }
             
             return R;
         }
