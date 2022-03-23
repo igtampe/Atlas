@@ -63,6 +63,8 @@ namespace Atlas.Common {
             Sidebar = null;
             Components = null;
 
+            string ParsingText = Text;
+
             //Get the Sidebar
             Match SidebarMatch = Regex.Match(Text, ">.*\r\n(.*\r\n)*>");
             if (SidebarMatch.Success) {
@@ -71,12 +73,12 @@ namespace Atlas.Common {
 
                 //We've got the sidebar!
                 Sidebar = Parser.ParseText(SidebarMatch.Value[1..(SidebarMatch.Value.Length-3)],GlobalLogger);
-                Text = Text.Replace(SidebarMatch.Value, "");
+                ParsingText = Text.Replace(SidebarMatch.Value, "");
 
             }
 
             GlobalLogger?.Debug($"Parsing Main Section");
-            Components = Parser.ParseText(Text,GlobalLogger);
+            Components = Parser.ParseText(ParsingText,GlobalLogger);
             GlobalLogger?.Debug($"Wrapping up...");
 
         }
