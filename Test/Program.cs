@@ -75,6 +75,7 @@ Here's my top ten picks for this year
 # seis
 # me cance.";
 
+/***
 string SmallTest = @"
 
 >Chopo
@@ -89,10 +90,11 @@ This is a section.
 ==Section 2
 Also a section,
 
-";
+";*/
 
 Atlas.Common.Article A = new() {
     Text = FullTest
 };
 
+Console.WriteLine(A);
 Console.ReadLine();
