@@ -188,7 +188,7 @@ namespace Atlas.API.Controllers {
 
             //Check the user on the DB instead of the user de-esta cosa
             bool Login = await DB.User.AnyAsync(U => U.Username == Request.Username && U.Password == Request.Password);
-            if (!Login) { return Ok("ID or Password is incorrect"); }
+            if (!Login) { return BadRequest("ID or Password is incorrect"); }
 
             //Generate a session
             return Ok(SessionManager.Manager.LogIn(Request.Username));
