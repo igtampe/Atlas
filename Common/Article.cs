@@ -21,9 +21,9 @@ namespace Atlas.Common {
         /// <summary>Text of this article</summary>
         public string Text {
             get => text; //Retrieve text
-            set { text = value; ParseText(); } //Set the text, clear the sections
+            set { text = value; Parsed=false; } //Set the text, clear the sections
         }
-
+            
         /// <summary>Date this article was created</summary>
         public DateTime DateCreated { get; set; } = DateTime.UtcNow;
 
@@ -78,6 +78,8 @@ namespace Atlas.Common {
         /// <summary>Converts Atlas format text into Atlas Sections</summary>
         /// <returns></returns>
         private void ParseText() {
+
+            text = text.Replace("\n", "\r\n");
 
             Parsed = true;
 
