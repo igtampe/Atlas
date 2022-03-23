@@ -1,6 +1,6 @@
 ﻿using Igtampe.BasicLogger;
 
-namespace Atlas.Common.ArticleComponents.SectionComponents {
+namespace Atlas.Common.ArticleComponents {
 
     /// <summary>Ordered or unordered bullet-list of formatted text</summary>
     public class BulletList {

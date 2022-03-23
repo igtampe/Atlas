@@ -1,6 +1,6 @@
 ﻿using Igtampe.BasicLogger;
 
-namespace Atlas.Common.ArticleComponents.SectionComponents {
+namespace Atlas.Common.ArticleComponents {
 
     /// <summary>A grid of images</summary>
     public class ImageGrid {

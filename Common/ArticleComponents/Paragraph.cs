@@ -1,6 +1,6 @@
 ﻿using Igtampe.BasicLogger;
 
-namespace Atlas.Common.ArticleComponents.SectionComponents {
+namespace Atlas.Common.ArticleComponents {
     
     /// <summary>A Paragraph block of formattedText and an optional image</summary>
     public class Paragraph {

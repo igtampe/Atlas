@@ -41,11 +41,13 @@ namespace Atlas.Common {
 
         /// <summary>The sidebar of this article</summary>
         [NotMapped]
-        public Section? Sidebar { get; set; } = null;
+        public List<object>? Sidebar { get; set; } = null;
 
         /// <summary>List of atlas sections in this article</summary>
         [NotMapped]
-        public Section? MainSection { get; set; } = null;
+        public List<object>? Components { get; set; } = null;
+        //I hope the JSON Serializer likes this. Even if this is a bit breaking from separation of concerns, all of these objects have basically nothing
+        //in common anyway, and we're not really going to be doing anything with them in the frontend from anything above section anyway so zoop.
 
         /// <summary>Checks if a User can edit this article</summary>
         /// <param name="U"></param>
@@ -59,7 +61,7 @@ namespace Atlas.Common {
             GlobalLogger?.Debug($"Beginning to parse new text for article {Title}");
 
             Sidebar = null;
-            MainSection = null;
+            Components = null;
 
             //Get the Sidebar
             Match SidebarMatch = Regex.Match(Text, ">.*\r\n(.*\r\n)*>");
@@ -68,13 +70,13 @@ namespace Atlas.Common {
                 GlobalLogger?.Debug($"Found a Sidebar");
 
                 //We've got the sidebar!
-                Sidebar = Section.MakeSection(SidebarMatch.Value[1..(SidebarMatch.Value.Length-3)],-1,GlobalLogger);
+                Sidebar = Parser.ParseText(SidebarMatch.Value[1..(SidebarMatch.Value.Length-3)],-1,GlobalLogger);
                 Text = Text.Replace(SidebarMatch.Value, "");
 
             }
 
             GlobalLogger?.Debug($"Parsing Main Section");
-            MainSection = Section.MakeSection(Text,0,GlobalLogger);
+            Components = Parser.ParseText(Text,0,GlobalLogger);
             GlobalLogger?.Debug($"Wrapping up...");
 
         }

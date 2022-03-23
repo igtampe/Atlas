@@ -1,4 +1,4 @@
-﻿namespace Atlas.Common.ArticleComponents.SectionComponents {
+﻿namespace Atlas.Common.ArticleComponents {
 
     /// <summary>An Image Box that shows an image with alt text, and a little description below it</summary>
     public abstract class ImageBox {

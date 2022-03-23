@@ -1,6 +1,6 @@
 ﻿using Igtampe.BasicLogger;
 
-namespace Atlas.Common.ArticleComponents.SectionComponents {
+namespace Atlas.Common.ArticleComponents {
 
     /// <summary>A Table with an optional title and header</summary>
     public class Table {
