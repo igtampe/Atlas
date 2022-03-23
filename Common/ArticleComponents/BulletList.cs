@@ -35,12 +35,14 @@ namespace Atlas.Common.ArticleComponents {
             /// <returns></returns>
             public static BulletListItem MakeBulletListItem(string Text, BulletListType Type, Logger? GlobalLogger = null) {
 
+                Text = Text.Trim();
+
                 GlobalLogger?.Debug($"Processing Bullet Item");
 
                 BulletListItem B = new();
 
                 int Line1End = Text.IndexOf(Environment.NewLine);
-                Line1End = Line1End == -1 ? Text.Length - 1 : Line1End;
+                Line1End = Line1End == -1 ? Text.Length : Line1End;
 
                 int IndexOfFirstBullet = Text.IndexOf((char)Type);
                 if (IndexOfFirstBullet == -1) {
@@ -93,7 +95,7 @@ namespace Atlas.Common.ArticleComponents {
                 return L; 
             } //There's a problem with the rest of it so *no*
 
-            string SearchBullet = new((char)Type, SearchIndent);
+            string SearchBullet = new(' ', SearchIndent);
             SearchBullet = Environment.NewLine + SearchBullet + (char)Type;
 
             //Now then, let's search for indices with this indent and a new line before this.
@@ -102,15 +104,12 @@ namespace Atlas.Common.ArticleComponents {
                 GlobalLogger?.Debug($"Finding next bullet. {Text.Length} Characters remaining");
 
                 int NextBulletIndex = Text.IndexOf(SearchBullet);
-                if (NextBulletIndex == -1) {
-                    GlobalLogger?.Warn($"We got to *that* part of the code.");
-                    return L; 
-                } //This should actually probably not happen so just return;
+                if (NextBulletIndex == -1) { NextBulletIndex = Text.Length;}
 
                 GlobalLogger?.Debug($"Found a Bullet, Adding the list item");
                 //Get the substring from the current part of the list to the start of the next one. 
                 L.Items.Add(BulletListItem.MakeBulletListItem(Text[0..NextBulletIndex],Type, GlobalLogger));
-                Text = Text[NextBulletIndex..];
+                Text = Text[NextBulletIndex..].TrimStart();
 
             }
 
