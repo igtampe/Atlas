@@ -47,7 +47,7 @@ namespace Atlas.Common.ArticleComponents {
                 return new($"[{Text}]") { Bold=Bold, Italic=Italic, Underline=Underline};
             }
 
-            return new($"{LinkSplit[0]}") { Bold = Bold, Italic = Italic, Underline = Underline, Link=LinkSplit[1] };
+            return new($"{LinkSplit[0].Trim()}") { Bold = Bold, Italic = Italic, Underline = Underline, Link = LinkSplit[1].Trim() };
 
         }
 
@@ -142,9 +142,9 @@ namespace Atlas.Common.ArticleComponents {
 
                         GlobalLogger?.Debug($"This is text formatting. Initiating subprocessing");
 
-                        bool SubBold = EndChars.Contains("**");
-                        bool SubItalic = EndChars.Length % 2 == 1;
-                        bool SubUnderline = EndChars.Contains("__");
+                        bool SubBold = EndChars.Contains("**") || Bold;
+                        bool SubItalic = EndChars.Length % 2 == 1 || Italic;
+                        bool SubUnderline = EndChars.Contains("__") || Underline;
 
                         //We subprocess the text
                         L.AddRange(FormatText(SubText,SubBold,SubItalic,SubUnderline,GlobalLogger));
