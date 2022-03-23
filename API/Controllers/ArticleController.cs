@@ -67,12 +67,13 @@ namespace Atlas.API.Controllers {
 
         /// <summary>Handles updating Articles</summary>
         /// <param name="SessionID">ID of the session executing this request</param>
-        /// <param name="Text">New text for this article</param>
         /// <param name="Title">Title of the article to edit</param>
         /// <returns></returns>
         // PUT API/Article/{ID}
         [HttpPut("{Title}")]
-        public async Task<IActionResult> Update([FromHeader] Guid? SessionID, [FromRoute] string Title,[FromBody] string Text) {
+        public async Task<IActionResult> Update([FromHeader] Guid? SessionID, [FromRoute] string Title) {
+
+            string Text = await new StreamReader(Request.Body).ReadToEndAsync();
 
             var E = await GetEditor(SessionID);
             if (E.Item2 is not null) { return E.Item2; }
