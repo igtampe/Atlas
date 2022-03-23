@@ -39,15 +39,36 @@ namespace Atlas.Common {
         /// <summary>Required edit level of this Article</summary>
         public int EditLevel { get; set; } = 0;
 
+        [NotMapped]
+        private bool Parsed = false;
+
+        private List<object>? sidebar = null;
+
         /// <summary>The sidebar of this article</summary>
         [NotMapped]
-        public List<object>? Sidebar { get; set; } = null;
+        public List<object>? Sidebar {
+            get {
+                if (!Parsed) { ParseText(); }
+                return sidebar;
+            }
+            set => sidebar = value;
+        }
+
+        private List<object>? components = null;
 
         /// <summary>List of atlas sections in this article</summary>
         [NotMapped]
-        public List<object>? Components { get; set; } = null;
+        public List<object>? Components {
+            get {
+                if (!Parsed) { ParseText(); }
+                return components;
+            }
+            set => components = value;
+        }
         //I hope the JSON Serializer likes this. Even if this is a bit breaking from separation of concerns, all of these objects have basically nothing
         //in common anyway, and we're not really going to be doing anything with them in the frontend from anything above section anyway so zoop.
+
+        //Update: The JSON Serializer DID like this!!! Thank god.
 
         /// <summary>Checks if a User can edit this article</summary>
         /// <param name="U"></param>
@@ -57,6 +78,8 @@ namespace Atlas.Common {
         /// <summary>Converts Atlas format text into Atlas Sections</summary>
         /// <returns></returns>
         private void ParseText() {
+
+            Parsed = true;
 
             GlobalLogger?.Debug($"Beginning to parse new text for article {Title}");
 
