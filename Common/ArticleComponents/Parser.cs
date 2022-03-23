@@ -41,7 +41,7 @@ namespace Atlas.Common.ArticleComponents {
                 string Element = Text[0..EndElement];
                 //We now have the bounds of the element
 
-                Match CurMatch = Regex.Match(Element.Length >= 3 ? Element[0..2] : Text, "(\\|\\||\\|I\\||\\[|-|#|=)");
+                Match CurMatch = Regex.Match(Element.Length >= 3 ? Element[0..3] : Text, "(\\|\\||\\|I\\||\\[|-|#|=)");
 
                 if (CurMatch.Success) {
 
