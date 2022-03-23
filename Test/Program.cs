@@ -5,8 +5,8 @@ Console.WriteLine();
 Igtampe.BasicLogger.Logger N = new Igtampe.BasicLogger.BasicLogger(Igtampe.BasicLogger.LogSeverity.DEBUG);
 Atlas.Common.Article.GlobalLogger = N;
 
-string FullTest = @">SIDEBAR
-This should be a sidebar with title SIDEBAR.
+string FullTest = @">
+This should be a sidebar
 
 [IMG | This is the alt text | https://avatars.githubusercontent.com/u/49919240 | This is the description of the image above, which is Chopo]
 
@@ -25,7 +25,7 @@ This should be a description that goes under the title and before the title, def
 ===Sub-Subsection
 ====And So on
 =====And So Forth
-I am the text from ""and so forth"". **This text should be bold**, *This text should be italicized* ***This text should be both bold and italicized***, and _***This text should be italicized, bold, and underlined***__. [This Text | Text] should link to a wiki page called ""Text"". [This Text | https://www.google.com] should link to google.
+I am the text from ""and so forth"". **This text should be bold**, *This text should be italicized* ***This text should be both bold and italicized***, and __***This text should be italicized, bold, and underlined***__. [This Text | Text] should link to a wiki page called ""Text"". [This Text | https://www.google.com] should link to google.
 This is a second paragraph.Here nothing is tested, beyond the fact that this is a separate paragraph.
 
 [IMG | This is the alt text | https://avatars.githubusercontent.com/u/49919240 | Another Chopo, oh god | LEFT]
@@ -50,8 +50,8 @@ This should be another subsection
 The following is a list of things I care about:
 
 - I
-    - Don't
-        - Care
+- Don't
+    - Care
         - About
     - Anything
 - Joseph
@@ -94,3 +94,5 @@ Also a section,
 Atlas.Common.Article A = new() {
     Text = FullTest
 };
+
+Console.ReadLine();
