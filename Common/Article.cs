@@ -70,13 +70,13 @@ namespace Atlas.Common {
                 GlobalLogger?.Debug($"Found a Sidebar");
 
                 //We've got the sidebar!
-                Sidebar = Parser.ParseText(SidebarMatch.Value[1..(SidebarMatch.Value.Length-3)],-1,GlobalLogger);
+                Sidebar = Parser.ParseText(SidebarMatch.Value[1..(SidebarMatch.Value.Length-3)],GlobalLogger);
                 Text = Text.Replace(SidebarMatch.Value, "");
 
             }
 
             GlobalLogger?.Debug($"Parsing Main Section");
-            Components = Parser.ParseText(Text,0,GlobalLogger);
+            Components = Parser.ParseText(Text,GlobalLogger);
             GlobalLogger?.Debug($"Wrapping up...");
 
         }
