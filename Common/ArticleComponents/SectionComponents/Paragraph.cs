@@ -1,4 +1,6 @@
-﻿namespace Atlas.Common.ArticleComponents.SectionComponents {
+﻿using Igtampe.BasicLogger;
+
+namespace Atlas.Common.ArticleComponents.SectionComponents {
     
     /// <summary>A Paragraph block of formattedText and an optional image</summary>
     public class Paragraph {
@@ -26,9 +28,12 @@
 
             /// <summary>Parses the text of an ImageBox into a ParagraphImageBox</summary>
             /// <param name="Row"></param>
+            /// <param name="GlobalLogger"></param>
             /// <returns></returns>
-            public static ParagraphImageBox MakeParagraphImageBox(string Row) {
+            public static ParagraphImageBox MakeParagraphImageBox(string Row, Logger? GlobalLogger = null) {
                 ParagraphImageBox I = new();
+
+                GlobalLogger?.Debug($"Creating Pargraph ImageBox");
 
                 //[IMG | This is the alt text | https://avatars.githubusercontent.com/u/49919240 | HA HA HA | 2]
                 //Get the substring between the beginning and the end.
@@ -40,7 +45,10 @@
                 string[] RowSplit = Row.Split('|');
 
                 //Verify length
-                if (RowSplit.Length < 4) { return I; }
+                if (RowSplit.Length < 4) {
+                    GlobalLogger?.Error($"Image wasn't formatted properly. Returning blank image");
+                    return I; 
+                }
 
                 I.AltText = RowSplit[1].TrimStart().TrimEnd();
                 I.ImageURL = RowSplit[2].TrimStart().TrimEnd();
@@ -51,6 +59,8 @@
                     "TOP" => ImagePosition.TOP,
                     _ => ImagePosition.NONE
                 } : ImagePosition.NONE;
+
+                GlobalLogger?.Debug($"Paragraph Image Processed");
 
                 return I;
             }
@@ -64,22 +74,33 @@
 
         /// <summary>Parses text to create a paragraph</summary>
         /// <param name="Text"></param>
+        /// <param name="GlobalLogger"></param>
         /// <returns></returns>
-        public static Paragraph MakeParagraph(string Text) {
+        public static Paragraph MakeParagraph(string Text, Logger? GlobalLogger = null) {
+
+            GlobalLogger?.Debug($"Creating a Paragraph");
 
             Paragraph P = new();
 
             if (Text.Length > 5 && Text[0..4].ToUpper()=="[IMG") {
+                
+                GlobalLogger?.Debug($"Found a paragraph image");
+                
                 //Find the index of the closing ]
                 int EB = Text.IndexOf(']');
-                if (EB == -1) { Text = Text[1..]; } 
-                else {  
-                    P.Image = ParagraphImageBox.MakeParagraphImageBox(Text[1..EB]);
+                if (EB == -1) {
+
+                    GlobalLogger?.Warn($"Paragraph image was for some reason not finished. Trimming the first [");
+                    Text = Text[1..]; 
+                }  else {
+                    GlobalLogger?.Debug($"Making paragraph image box");
+                    P.Image = ParagraphImageBox.MakeParagraphImageBox(Text[1..EB], GlobalLogger);
                     Text = Text[(EB + 1)..];
                 }
             }
 
-            P.Text = FormattedText.FormatText(Text);
+            GlobalLogger?.Debug($"Formatting Text...");
+            P.Text = FormattedText.FormatText(Text,false,false,false,GlobalLogger);
 
             return P;
         }

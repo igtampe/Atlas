@@ -1,4 +1,6 @@
-﻿namespace Atlas.Common.ArticleComponents.SectionComponents {
+﻿using Igtampe.BasicLogger;
+
+namespace Atlas.Common.ArticleComponents.SectionComponents {
 
     /// <summary>A grid of images</summary>
     public class ImageGrid {
@@ -49,20 +51,26 @@
 
         /// <summary>Parses text into an ImageGrid</summary>
         /// <param name="Text"></param>
+        /// <param name="GlobalLogger"></param>
         /// <returns></returns>
-        public static ImageGrid MakeGrid(string Text) {
+        public static ImageGrid MakeGrid(string Text, Logger? GlobalLogger = null) {
+
+            GlobalLogger?.Debug($"Creating an ImageGrid");
 
             ImageGrid G = new();
 
             //Get the title
             string[] RowTexts = Text.Split(Environment.NewLine);
             if (RowTexts.Length < 2) {
+                GlobalLogger?.Error($"Insufficient rows to make an ImageGrid. Returning Error ImageGrid");
                 G.Title = "Something went wrong!";
                 return G;
             }
 
             //Title
             if (RowTexts[0].Length > 2) { G.Title = RowTexts[0][3..]; }
+            
+            GlobalLogger?.Debug($"Processing ImageGrid Rows");
 
             //header and other rows
             foreach (string RowText in RowTexts[2..]) { G.Images.Add(ImageGridBox.MakeImageGridBox(RowText)); }

@@ -2,10 +2,14 @@
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Text.RegularExpressions;
 using Atlas.Common.ArticleComponents;
+using Igtampe.BasicLogger;
 
 namespace Atlas.Common {
     /// <summary>An Atlas Article</summary>
     public class Article {
+
+        /// <summary>Configured Global Logger for all Articles</summary>
+        public static Logger? GlobalLogger { get; set; } = null;
 
         /// <summary>Unique title of this Atlas article</summary>
         [Key]
@@ -52,19 +56,27 @@ namespace Atlas.Common {
         /// <returns></returns>
         private void ParseText() {
 
+            GlobalLogger?.Debug($"Beginning to parse new text for article {Title}");
+
             Sidebar = null;
             MainSection = null;
 
             //Get the Sidebar
-            Match SidebarMatch = Regex.Match(Text, ">{.*}\\n(.*\\n)*>");
+            Match SidebarMatch = Regex.Match(Text, ">.*\r\n(.*\r\n)*>");
             if (SidebarMatch.Success) {
+
+                GlobalLogger?.Debug($"Found a Sidebar");
+
                 //We've got the sidebar!
-                Sidebar = Section.MakeSection(SidebarMatch.Value[1..(SidebarMatch.Value.Length-2)]);
+                Sidebar = Section.MakeSection(SidebarMatch.Value[1..(SidebarMatch.Value.Length-3)],-1,GlobalLogger);
                 Text = Text.Replace(SidebarMatch.Value, "");
+
             }
 
-            MainSection = Section.MakeSection(Text,0);
-            
+            GlobalLogger?.Debug($"Parsing Main Section");
+            MainSection = Section.MakeSection(Text,0,GlobalLogger);
+            GlobalLogger?.Debug($"Wrapping up...");
+
         }
     }
 }

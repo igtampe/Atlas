@@ -1,4 +1,6 @@
-﻿namespace Atlas.Common.ArticleComponents.SectionComponents {
+﻿using Igtampe.BasicLogger;
+
+namespace Atlas.Common.ArticleComponents.SectionComponents {
 
     /// <summary>Ordered or unordered bullet-list of formatted text</summary>
     public class BulletList {
@@ -29,8 +31,11 @@
             /// <summary>Makes a bulletlist item</summary>
             /// <param name="Text"></param>
             /// <param name="Type"></param>
+            /// <param name="GlobalLogger"></param>
             /// <returns></returns>
-            public static BulletListItem MakeBulletListItem(string Text, BulletListType Type) {
+            public static BulletListItem MakeBulletListItem(string Text, BulletListType Type, Logger? GlobalLogger = null) {
+
+                GlobalLogger?.Debug($"Processing Bullet Item");
 
                 BulletListItem B = new();
 
@@ -39,6 +44,9 @@
 
                 int IndexOfFirstBullet = Text.IndexOf((char)Type);
                 if (IndexOfFirstBullet == -1) {
+
+                    GlobalLogger?.Error($"Couldn't find the index of the first bullet. What the");
+
                     //uh...
                     B.Text = FormattedText.FormatText(Text);
                     return B;
@@ -48,10 +56,14 @@
                 //Assume the first line is this bullet list item
                 B.Text = FormattedText.FormatText(Text[(IndexOfFirstBullet + 1)..Line1End].TrimStart().TrimEnd());
                 Text = Text[Line1End..];
-                if (string.IsNullOrWhiteSpace(Text)) { return B; }
+                if (string.IsNullOrWhiteSpace(Text)) {
+                    GlobalLogger?.Debug($"This was only a single bullet. Returning");
+                    return B; 
+                }
 
+                GlobalLogger?.Debug($"There's more lines. Making a sublist");
                 //OK we have more than one line, meaning we've got a sublist. 
-                B.Sublist = MakeList(Text);
+                B.Sublist = MakeList(Text,GlobalLogger);
 
                 return B;
 
@@ -63,16 +75,23 @@
 
         /// <summary>Parses text into a bullet list</summary>
         /// <param name="Text"></param>
+        /// <param name="GlobalLogger"></param>
         /// <returns></returns>
-        public static BulletList MakeList(string Text) { 
-        
+        public static BulletList MakeList(string Text, Logger? GlobalLogger = null) {
+
+            GlobalLogger?.Debug($"Making a List");
+
             BulletList L = new();
 
             //Check what type of list this is:
             BulletListType Type = (BulletListType)Text.TrimStart()[0];
+            GlobalLogger?.Debug($"Found a list of type {Type}");
 
             int SearchIndent = Text.IndexOf((char)Type);
-            if (SearchIndent == -1) { return L; } //There's a problem with the rest of it so *no*
+            if (SearchIndent == -1) {
+                GlobalLogger?.Error($"What");
+                return L; 
+            } //There's a problem with the rest of it so *no*
 
             string SearchBullet = new((char)Type, SearchIndent);
             SearchBullet = Environment.NewLine + SearchBullet + (char)Type;
@@ -80,11 +99,17 @@
             //Now then, let's search for indices with this indent and a new line before this.
             while (!string.IsNullOrWhiteSpace(Text)) {
 
-                int NextBulletIndex = Text.IndexOf(SearchBullet);
-                if (NextBulletIndex == -1) { return L; } //This should actually probably not happen so just return;
+                GlobalLogger?.Debug($"Finding next bullet. {Text.Length} Characters remaining");
 
+                int NextBulletIndex = Text.IndexOf(SearchBullet);
+                if (NextBulletIndex == -1) {
+                    GlobalLogger?.Warn($"We got to *that* part of the code.");
+                    return L; 
+                } //This should actually probably not happen so just return;
+
+                GlobalLogger?.Debug($"Found a Bullet, Adding the list item");
                 //Get the substring from the current part of the list to the start of the next one. 
-                L.Items.Add(BulletListItem.MakeBulletListItem(Text[0..NextBulletIndex],Type));
+                L.Items.Add(BulletListItem.MakeBulletListItem(Text[0..NextBulletIndex],Type, GlobalLogger));
                 Text = Text[NextBulletIndex..];
 
             }

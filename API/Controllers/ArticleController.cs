@@ -3,6 +3,7 @@ using Atlas.Common;
 using Atlas.Data;
 using Igtampe.ChopoSessionManager;
 using Microsoft.EntityFrameworkCore;
+using Igtampe.BasicLogger;
 
 namespace Atlas.API.Controllers {
 
@@ -10,6 +11,8 @@ namespace Atlas.API.Controllers {
     [Route("API/Article")]
     [ApiController]
     public class ArticleController : ControllerBase {
+
+        private static readonly Logger GlobalLogger = new BasicLogger(LogSeverity.INFO);
 
         private readonly AtlasContext DB;
         private static readonly User AnonymousUser = new() {
@@ -19,7 +22,13 @@ namespace Atlas.API.Controllers {
 
         /// <summary>Creates a User Controller</summary>
         /// <param name="Context"></param>
-        public ArticleController(AtlasContext Context) => DB = Context;
+        public ArticleController(AtlasContext Context) { 
+            DB = Context;
+#if DEBUG
+            GlobalLogger.MinSeverity = LogSeverity.DEBUG;
+#endif
+            if (Article.GlobalLogger is null) { Article.GlobalLogger = GlobalLogger; }
+        }
 
         #region Gets
         /// <summary>Gets a list of all articles on this Atlas server</summary>

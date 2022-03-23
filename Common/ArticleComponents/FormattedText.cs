@@ -1,4 +1,5 @@
-﻿using System.Text.RegularExpressions;
+﻿using Igtampe.BasicLogger;
+using System.Text.RegularExpressions;
 
 namespace Atlas.Common.ArticleComponents {
 
@@ -55,26 +56,34 @@ namespace Atlas.Common.ArticleComponents {
         /// <param name="Bold"></param>
         /// <param name="Italic"></param>
         /// <param name="Underline"></param>
+        /// <param name="GlobalLogger"></param>
         /// <returns></returns>
-        public static List<FormattedText> FormatText(string Text, bool Bold = false, bool Italic = false, bool Underline = false) {
+        public static List<FormattedText> FormatText(string Text, bool Bold = false, bool Italic = false, bool Underline = false, Logger? GlobalLogger = null) {
+
+            GlobalLogger?.Debug($"Formatting Text \"{Text}\"");
 
             List<FormattedText> L = new();
 
             while (!string.IsNullOrWhiteSpace(Text)) {
+                
+                GlobalLogger?.Debug($"Formatting Text. {Text.Length} characters remaining. Finding special characters");
 
                 //Find the index of the next special bit of text:
                 var SpecialCharsMatch = Regex.Match(Text, "_{2}|\\*+|\\["); //Checks for any string containing __, *, or [
 
                 if (!SpecialCharsMatch.Success) {
+                    GlobalLogger?.Debug($"Remaining text has no special characters. Adding remaining text and leaving");
                     //There are no more special characters. Add the remaining text to the list, and lets get out of here.
                     L.Add(new(Text) {  Bold = Bold, Italic = Italic, Underline = Underline, });
                     break;
                 } else {
 
                     //There's a match
+                    GlobalLogger?.Debug($"Found a special char");
 
                     //if it's index is not 0, we need to add everything before it as standard text:
-                    if (SpecialCharsMatch.Index != 0) { 
+                    if (SpecialCharsMatch.Index != 0) {
+                        GlobalLogger?.Debug($"Adding text before the special char");
                         L.Add(new(Text[..SpecialCharsMatch.Index])); //Add the text before  the index of the special chars
                         Text=Text[SpecialCharsMatch.Index..]; //Remove that text from the text we're still processing
                     }
@@ -84,9 +93,10 @@ namespace Atlas.Common.ArticleComponents {
 
                     //Search for the next match of the found 
                     //Since this is relatively simple we can just do IndexOf
-                    int EndCharsIndex = Text.IndexOf(EndChars);
+                    int EndCharsIndex = Text[EndChars.Length..].IndexOf(EndChars);
                     if (EndCharsIndex == -1) {
                         //This is an unfinished bit of special text. We give up, and just add the rest, then return
+                        GlobalLogger?.Error($"Unterminated special char. Returning remaining text and getting the heck out");
                         L.Add(new(Text));
                         Text = string.Empty;
                         break;
@@ -119,28 +129,33 @@ namespace Atlas.Common.ArticleComponents {
 
                      */
 
-                    string SubText = Text[EndChars.Length..EndCharsIndex];
+                    string SubText = Text[EndChars.Length..(EndCharsIndex+EndChars.Length)];
 
                     //Let's assess what operators we have to implement.
                     if (EndChars == "]") {
-
+                        GlobalLogger?.Debug($"This is a Link. Adding the Link");
                         //THIS IS A LINK. DO NOT SUBPROCESS. ADD IT SINGLY.
                         L.Add(MakeLink(SubText, Bold, Italic, Underline));
                         
 
                     } else {
 
+                        GlobalLogger?.Debug($"This is text formatting. Initiating subprocessing");
+
                         bool SubBold = EndChars.Contains("**");
                         bool SubItalic = EndChars.Length % 2 == 1;
                         bool SubUnderline = EndChars.Contains("__");
 
                         //We subprocess the text
-                        L.AddRange(FormatText(SubText,SubBold,SubItalic,SubUnderline));
+                        L.AddRange(FormatText(SubText,SubBold,SubItalic,SubUnderline,GlobalLogger));
 
                     }
 
                     //Then we remove the text we processed:
-                    Text = Text[(EndCharsIndex + EndChars.Length)..]; //And proceed
+                    Text = Text[(EndCharsIndex + (EndChars.Length*2))..]; //And proceed
+                    //Here we have to multiply by 2. The endCharsIndex is missing the matching char's length (which is the same as EndChar's length.
+                    //The True EndChars index is essentially EndCharsIndex plus EndChars.length
+                    //and we have to add EndChars Length again to move past the end chars.
                 }
             }
 

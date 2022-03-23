@@ -1,4 +1,6 @@
-﻿namespace Atlas.Common.ArticleComponents.SectionComponents {
+﻿using Igtampe.BasicLogger;
+
+namespace Atlas.Common.ArticleComponents.SectionComponents {
 
     /// <summary>A Table with an optional title and header</summary>
     public class Table {
@@ -46,13 +48,17 @@
 
         /// <summary>Constructs a table from a given </summary>
         /// <param name="Text"></param>
+        /// <param name="GlobalLogger"></param>
         /// <returns></returns>
-        public static Table MakeTable(string Text) {
+        public static Table MakeTable(string Text, Logger? GlobalLogger = null) {
+
+            GlobalLogger?.Debug($"Creating a Table");
 
             Table T = new();
 
             string[] RowTexts = Text.Split(Environment.NewLine);
             if (RowTexts.Length < 3) {
+                GlobalLogger?.Error($"Table did not have at least 3 lines. Generated an ErrorTable");
                 return ErrorTable("Table needs at least 3 lines. Title (even if blank), Header Row (even if blank), and at least one row of actual data");
             }
 
@@ -60,8 +66,13 @@
             if (RowTexts[0].Length > 2) { T.Title = RowTexts[0][2..]; }
 
             //header and other rows
+            GlobalLogger?.Debug($"Processing Header Row");
             if (!string.IsNullOrWhiteSpace(RowTexts[1].Replace("|", ""))) { T.HeaderRow = MakeRow(RowTexts[1]); }
+
+            GlobalLogger?.Debug($"Processing Rows");
             foreach (string RowText in RowTexts[2..]) { T.Rows.Add(MakeRow(RowText));}
+
+            GlobalLogger?.Debug($"Done, Adios");
 
             return T;
         }
