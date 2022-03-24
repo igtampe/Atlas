@@ -75,6 +75,9 @@ namespace Atlas.Common.ArticleComponents {
         /// <summary>List of items in this bullet list</summary>
         public List<BulletListItem> Items { get; set; } = new();
 
+        /// <summary>Type of this list</summary>
+        public BulletListType Type { get; set; } = BulletListType.BULLET;
+
         /// <summary>Parses text into a bullet list</summary>
         /// <param name="Text"></param>
         /// <param name="GlobalLogger"></param>
@@ -88,6 +91,7 @@ namespace Atlas.Common.ArticleComponents {
             //Check what type of list this is:
             BulletListType Type = (BulletListType)Text.TrimStart()[0];
             GlobalLogger?.Debug($"Found a list of type {Type}");
+            L.Type = Type;
 
             int SearchIndent = Text.IndexOf((char)Type);
             if (SearchIndent == -1) {
