@@ -38,7 +38,7 @@ namespace Atlas.Common.ArticleComponents {
                 //[IMG | This is the alt text | https://avatars.githubusercontent.com/u/49919240 | HA HA HA | 2]
                 //Get the substring between the beginning and the end.
                 if (Row.Length < 2) { return I; }
-                Row = Row[1..(Row.Length - 2)];
+                //Row = Row[1..(Row.Length - 2)]; //This is unnecessary. Its already done
 
                 //IMG | This is the alt text | https://avatars.githubusercontent.com/u/49919240 | HA HA HA | 2
                 //Split the row
