@@ -8,7 +8,10 @@ export default function SearchField(props) {
     const history = useHistory();
     const [query,setQuery] = React.useState("");
 
-    const launchSearch = () => { history.push("/Search?query=" + query) }
+    const launchSearch = () => { 
+        history.push("/Search?query=" + query) 
+        history.go()
+    }
 
     return (<table style={{width:'100%'}}>
         <tr>
