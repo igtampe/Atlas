@@ -2,11 +2,14 @@ import * as React from 'react';
 import {TextField, Button, IconButton} from "@mui/material";
 import { useHistory } from "react-router-dom";
 import { Search } from '@mui/icons-material';
+import useQuery from '../Hooks/useQuery';
 
 export default function SearchField(props) {
 
+    let Uquery = useQuery();
+
     const history = useHistory();
-    const [query,setQuery] = React.useState("");
+    const [query,setQuery] = React.useState(Uquery.get("query"));
 
     const launchSearch = () => { 
         history.push("/Search?query=" + query) 
