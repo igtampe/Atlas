@@ -4,6 +4,11 @@ import React from 'react';
 export function ParseFormattedText(FT) {
 
     var ReturnElement = <>{FT.text.replace("\\n","\r\n")}</>;
+    
+    if(FT.code){
+        ReturnElement = <code>{ReturnElement}</code>
+    }
+
     if(Boolean(FT.link)){
         var link = FT.link.toLowerCase().startsWith("https://") ? FT.link : "/Article/" + FT.link
         ReturnElement = <Link color='secondary' href={link}>{ReturnElement}</Link>

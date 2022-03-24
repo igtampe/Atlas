@@ -18,6 +18,9 @@ namespace Atlas.Common.ArticleComponents {
         /// <summary>Whether or not this formatted text is underlined</summary>
         public bool Underline { get; set; } = false;
 
+        /// <summary>Whether or not this formatted text is code </summary>
+        public bool Code { get; set; } = false;
+
         /// <summary>Link this formatted text is supposed to have. If it's null, this is not a link</summary>
         public string? Link { get; set; } = null;
 
@@ -69,7 +72,7 @@ namespace Atlas.Common.ArticleComponents {
                 GlobalLogger?.Debug($"Formatting Text. {Text.Length} characters remaining. Finding special characters");
 
                 //Find the index of the next special bit of text:
-                var SpecialCharsMatch = Regex.Match(Text, "_{2}|\\*+|\\["); //Checks for any string containing __, *, or [
+                var SpecialCharsMatch = Regex.Match(Text, "_{2}|\\*+|\\[|`{3}"); //Checks for any string containing __, *, or [
 
                 if (!SpecialCharsMatch.Success) {
                     GlobalLogger?.Debug($"Remaining text has no special characters. Adding remaining text and leaving");
@@ -136,7 +139,12 @@ namespace Atlas.Common.ArticleComponents {
                         GlobalLogger?.Debug($"This is a Link. Adding the Link");
                         //THIS IS A LINK. DO NOT SUBPROCESS. ADD IT SINGLY.
                         L.Add(MakeLink(SubText, Bold, Italic, Underline));
-                        
+
+
+                    } else if (EndChars=="```") {
+                        GlobalLogger?.Debug($"This is Code. Adding the code");
+                        //THIS IS CODE. DO NOT SUBPROCESS. ADD IT SINGLY
+                        L.Add(new(SubText) { Bold = Bold, Italic = Italic, Underline = Underline, Code = true, });
 
                     } else {
 
