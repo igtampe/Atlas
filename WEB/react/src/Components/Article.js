@@ -1,11 +1,12 @@
-import { Card, CardContent, CircularProgress, Divider } from '@mui/material';
+import { Delete, Edit, Lock } from '@mui/icons-material';
+import { Card, CardContent, CircularProgress, Divider, IconButton, Tooltip } from '@mui/material';
 import React, { useState } from 'react';
 import { GetArticle } from '../API/Article';
-import { ParseImageGrid } from './ArticleComponents/ImageGrid';
-import { ParseList } from './ArticleComponents/List';
-import { ParseParagraph } from './ArticleComponents/Paragraph';
-import { ParseSection } from './ArticleComponents/Section';
-import { ParseTable } from './ArticleComponents/Table';
+import { ParseImageGrid } from './ArticleComponents/TextComponents/ImageGrid';
+import { ParseList } from      './ArticleComponents/TextComponents/List';
+import { ParseParagraph } from './ArticleComponents/TextComponents/Paragraph';
+import { ParseSection } from   './ArticleComponents/TextComponents/Section';
+import { ParseTable } from     './ArticleComponents/TextComponents/Table';
 
 export default function Article(props) {
 
@@ -13,7 +14,7 @@ export default function Article(props) {
     const [Loading, setLoading] = useState(false);
     const [Error, setError] = useState(undefined)
 
-    if (!Article && !Loading) { GetArticle(setLoading, props.title, setArticle, setError) }
+    if (!Article && !Loading && Boolean(props.title)) { GetArticle(setLoading, props.title, setArticle, setError) }
 
     if (!Article && !Error) {
         return (<>
@@ -36,8 +37,14 @@ export default function Article(props) {
     document.title = "The UMS Wiki - " + Article.title;
 
     return (<>
-        <div style={{ fontSize: 35 }}>{Article.title}</div>
-
+        <table width='100%'>
+            <tr>
+                <td><div style={{ fontSize: 35 }}>{Article.title}</div></td>
+                <td width={1}><Tooltip title='Edit the text of this article'><IconButton><Edit/></IconButton></Tooltip></td>
+                <td width={1}><Tooltip title='Lock this Article'><IconButton><Lock/></IconButton></Tooltip></td>
+                <td width={1}><Tooltip title='Delete this Article'><IconButton><Delete/></IconButton></Tooltip></td>
+            </tr>
+        </table>
         <Divider /> <br />
         {Article.sidebar
             ? <Sidebar elements={Article.sidebar} />

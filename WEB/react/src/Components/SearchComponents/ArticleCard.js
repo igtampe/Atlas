@@ -1,6 +1,6 @@
 import { Card, CardContent, CircularProgress, Divider, Link } from '@mui/material';
 import React from 'react';
-import { ParseParagraph } from '../ArticleComponents/Paragraph';
+import { ParseParagraph } from '../ArticleComponents/TextComponents/Paragraph';
 
 export default function ArticleCard(Article) {
 

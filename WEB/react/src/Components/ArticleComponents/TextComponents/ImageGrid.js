@@ -9,7 +9,6 @@ export function ParseImageGrid(ImgGrid) {
             <div style={{textAlign:'center'}}><b>{ImgGrid.title}</b></div>
             <Grid container spacing={2}> {ImgGrid.images.map(A=>ParseImageGridItem(A))}</Grid>
         </>
-        
     )
 
 }
