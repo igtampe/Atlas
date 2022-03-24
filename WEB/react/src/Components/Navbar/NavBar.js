@@ -9,7 +9,6 @@ import MenuIcon from "@mui/icons-material/Menu";
 import UserButton from "./NavBarComponents/UserButton";
 import Hamburger from "./NavBarComponents/Hamburger";
 import LogoutButton from "./NavBarComponents/LogoutButton";
-import SettingsButton from "./NavBarComponents/SettingsButton";
 import SearchField from "../Reusable/SearchField";
 
 // react.school/material-ui
