@@ -12,6 +12,7 @@ import { Footer } from './Components/Footer';
 import Home from './Components/Home';
 import Auth from './Components/Auth';
 import Article from './Components/Article';
+import { SearchComponent } from './Components/Search';
 
 //Cookies should only really be accessed here.
 const cookies = new Cookies();
@@ -109,7 +110,7 @@ export default function App() {
           : <Redirect to='/Login' />}
       </Route>
       <Route path='/Search'>
-        <>Search for "{query.get("query")}"</>
+        <SearchComponent query={query.get("query")}/>
       </Route>
       <Route path='/NewArticle' children={
         <PreArticleDisplay newArticle={true} DarkMode={darkMode} Session={Session} User={User} Vertical={Vertical} />
