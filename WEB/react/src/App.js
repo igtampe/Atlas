@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Route, Redirect, useLocation, useParams } from 'react-router';
+import { Route, Redirect, useParams } from 'react-router';
 import { ThemeProvider } from '@mui/material/styles';
 import Cookies from 'universal-cookie/es6';
 import useWindowDimensions from './Components/Hooks/useWindowDimensions';
@@ -13,17 +13,13 @@ import Home from './Components/Home';
 import Auth from './Components/Auth';
 import Article from './Components/Article';
 import { SearchComponent } from './Components/Search';
+import useQuery from './Components/Hooks/useQuery';
 
 //Cookies should only really be accessed here.
 const cookies = new Cookies();
 
 function CenteredCircular() { return (<div style={{ textAlign: 'center' }}> <CircularProgress /> </div>) }
 
-function useQuery() {
-  const { search } = useLocation();
-
-  return React.useMemo(() => new URLSearchParams(search), [search]);
-}
 
 export default function App() {
 
