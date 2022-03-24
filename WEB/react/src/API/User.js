@@ -9,12 +9,12 @@ export const GetUserDirectory = (setLoading, setUsers, Query, Skip, Take) => {
     var append = undefined;
     if (Boolean(Query)) { append = "?Query=" + Query }
     if (Boolean(Skip)) {
-        if (!append) { append = "?" } else { append = "&" }
-        append = append + "Skip=" + Skip
+        if (!append) { append += "?" } else { append += "&" }
+        append += append + "Skip=" + Skip
     }
     if (Boolean(Take)) {
-        if (!append) { append = "?" } else { append = "&" }
-        append = append + "Take=" + Take
+        if (!append) { append += "?" } else { append += "&" }
+        append += append + "Take=" + Take
     }
 
     //Fetch

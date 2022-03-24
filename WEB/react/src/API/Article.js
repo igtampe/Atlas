@@ -1,4 +1,4 @@
-import { GenerateGet, GeneratePost, GeneratePut } from "./common";
+import { APIURL, GenerateGet, GeneratePost, GeneratePut, GenerateDelete } from "./common";
 
 export const GetArticles = (setLoading, setArticles, Query, Skip, Take) => {
 
@@ -8,12 +8,12 @@ export const GetArticles = (setLoading, setArticles, Query, Skip, Take) => {
     var append = undefined;
     if (Boolean(Query)) { append = "?Query=" + Query }
     if (Boolean(Skip)) {
-        if (!append) { append = "?" } else { append = "&" }
-        append = append + "Skip=" + Skip
+        if (!append) { append += "?" } else { append += "&" }
+        append += append + "Skip=" + Skip
     }
     if (Boolean(Take)) {
-        if (!append) { append = "?" } else { append = "&" }
-        append = append + "Take=" + Take
+        if (!append) { append += "?" } else { append += "&" }
+        append += append + "Take=" + Take
     }
 
     //Fetch
@@ -33,12 +33,12 @@ export const GetArticles = (setLoading, setArticles, Query, Skip, Take) => {
 export const GetArticle = (setLoading, Title, setArticle, setError) => {
 
     setLoading(true);
-    fetch(APIURL + "/API/Article/" + Title, GenerateGet(Session))
+    fetch(APIURL + "/API/Article/" + Title, GenerateGet(null))
         .then(response => response.json()).then(data => {
 
             //Remember to check for errors and set errors if needed
             if (data.error || data.errors) {
-                setError(data.error ?? "An unknown serverside error occurred");
+                setError(data.reason ?? "An unknown serverside error occurred");
                 return;
             }
 
