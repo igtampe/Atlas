@@ -1,4 +1,4 @@
-import { CircularProgress, Divider } from '@mui/material';
+import { Button, CircularProgress, Divider } from '@mui/material';
 import React, { useState } from 'react';
 import { Redirect } from 'react-router-dom';
 import { GetArticles } from '../API/Article';
@@ -41,20 +41,18 @@ export function SearchComponent(props) {
         return (<>
             <h1>Nada</h1>
             <Divider /> <br />
-            Nothing was found!
+            No articles matching or containing that title were found
         </>);
     }
 
-    if (results.length===1){
-        return(<Redirect to={'/Article/' + results[0].title}/>)
-
-    }
+    if (results.length===1){ return(<Redirect to={'/Article/' + results[0].title}/>) }
 
     return(
         <>
-            {results.map(a=><div style={{margin:'20px'}}>
-                {ArticleCard(a)}
-            </div>)}
+            {results.map(a=><div style={{margin:'20px'}}>{ArticleCard(a)}</div>)}
+            <div style={{marginTop:'20px', textAlign:'center'}}>    
+                {noMas ? <i>No more articles were found</i>: <Button variant='contained' color='secondary' onClick={getMas}> Get more Articles</Button>}
+            </div>
         </>
     )
 
