@@ -57,7 +57,7 @@ export const UpdateArticle = (setLoading, Session, Title, ArticleText, setArticl
 
             //Remember to check for errors and set errors if needed
             if (data.error || data.errors) {
-                setError(data.error ?? "An unknown serverside error occurred");
+                setError(data.reason ?? "An unknown serverside error occurred");
                 return;
             }
 
@@ -79,7 +79,8 @@ const PostArticle = (setLoading, Session, Title, ArticleText, Save, setArticle, 
 
             //Remember to check for errors and set errors if needed
             if (data.error || data.errors) {
-                setError(data.error ?? "An unknown serverside error occurred");
+                setError(data.reason ?? "An unknown serverside error occurred");
+                setLoading(false)
                 return;
             }
 
@@ -93,12 +94,12 @@ const PostArticle = (setLoading, Session, Title, ArticleText, Save, setArticle, 
 export const UpdateArticleEditLevel = (setLoading, Session, Title, EditLevel, setArticle, setError) => {
 
     setLoading(true);
-    fetch(APIURL + "/API/Article/" + Title + "?NewEditLevel=" + EditLevel, GeneratePut(Session,""))
+    fetch(APIURL + "/API/Article/" + Title + "/EditLevel?NewEditLevel=" + EditLevel, GeneratePut(Session,""))
         .then(response => response.json()).then(data => {
 
             //Remember to check for errors and set errors if needed
             if (data.error || data.errors) {
-                setError(data.error ?? "An unknown serverside error occurred");
+                setError(data.reason ?? "An unknown serverside error occurred");
                 return;
             }
 
@@ -117,7 +118,7 @@ export const DeleteArticle = (setLoading, Session, Title, setArticle, setError) 
 
             //Remember to check for errors and set errors if needed
             if (data.error || data.errors) {
-                setError(data.error ?? "An unknown serverside error occurred");
+                setError(data.reason ?? "An unknown serverside error occurred");
                 return;
             }
 
