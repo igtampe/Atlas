@@ -116,7 +116,10 @@ namespace Atlas.API.Controllers {
             Article? R = await GetArticle(Title);
             if (R is null) { return NotFound(ErrorResult.NotFound("Article was not found!", "Title")); }
             if (!R.CanEdit(Editor)) { return Unauthorized(ErrorResult.Forbidden("You do not have enough edit level to edit this article", "User")); }
-            
+
+            R.EditLevel = NewEditLevel;
+            DB.Update(R);
+
             await DB.SaveChangesAsync();
 
             return Ok(R);
@@ -153,7 +156,8 @@ namespace Atlas.API.Controllers {
             };
 
             if (Save ?? false) {
-                if (GetArticle(Title) is not null) { return BadRequest(ErrorResult.BadRequest("An article with this title already exists!")); }
+                var Existing = await GetArticle(Title);
+                if ( Existing is not null) { return BadRequest(ErrorResult.BadRequest("An article with this title already exists!")); }
                 DB.Add(R);
                 await DB.SaveChangesAsync();
             }
