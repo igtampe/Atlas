@@ -14,11 +14,8 @@ export default function PasswordChangeButton(props) {
 
     const [PassOpen, setPassOpen] = useState(false);
     const [InProgress, setInProgress] = useState(false);
-    const [result, setResult] = useState({
-        severity: "success",
-        text: "idk"
-    })
 
+    const [result, setResult] = useState({ severity: "success", text: "idk" })
     const [SnackOpen, setSnackOpen] = useState(false);
 
     const handleChangePass = (event) => {
