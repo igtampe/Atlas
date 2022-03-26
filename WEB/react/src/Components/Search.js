@@ -42,7 +42,9 @@ export function SearchComponent(props) {
 
     return(
         <>
-            {results.map(a=>ArticleCard(a))}
+            {results.map(a=><div style={{margin:'20px'}}>
+                {ArticleCard(a)}
+            </div>)}
         </>
     )
 
