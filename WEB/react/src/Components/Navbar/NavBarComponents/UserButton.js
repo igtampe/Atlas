@@ -65,7 +65,7 @@ export default function UserButton(props) {
                 <img src={props.User.imageURL === "" ? "/icons/person.png" : props.User.imageURL} alt="Profile" width="30px" style={{ margin: "5px", marginLeft: "10px" }} />
             </Button>
             <Menu anchorEl={anchorEl} open={open} onClose={handleClose} >
-                <MenuItem onClick={()=>{history.push('/Article/' + props.User.username); handleClose()}} >My Profile</MenuItem>
+                <MenuItem onClick={()=>{history.push('/Article/' + props.User.username); history.go()}} >My Profile</MenuItem>
                 <MenuItem onClick={handlePickerOpen} disabled={!props.User.isAdmin && !props.User.isUploader}>Change Image</MenuItem>
                 <Divider />
                 <ListItem key="AccountManagement">
