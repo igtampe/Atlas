@@ -1,5 +1,6 @@
 import { CircularProgress, Divider } from '@mui/material';
 import React, { useState } from 'react';
+import { Redirect } from 'react-router-dom';
 import { GetArticles } from '../API/Article';
 import ArticleCard from './SearchComponents/ArticleCard';
 
@@ -38,6 +39,11 @@ export function SearchComponent(props) {
             <Divider /> <br />
             Nothing was found!
         </>);
+    }
+
+    if (results.length===1){
+        return(<Redirect to={'/Article/' + results[0].title}/>)
+
     }
 
     return(
