@@ -28,11 +28,8 @@ export default function UserButton(props) {
     }
 
     const setImageURL = (e) => {
-
-        console.log(e)
-
         if (!e) {
-            console.log("imageurl was not set")
+            console.warn("imageurl was not set")
             return;
         }
 
@@ -41,14 +38,11 @@ export default function UserButton(props) {
         fetch(APIURL + '/API/Users/image', GenerateJSONPut(props.Session, e))
             .then(response => response.ok)
             .then(data => {
-                console.log("ok it happeneds")
                 if (!data) {
-                    console.log("n o")
                     setResult({ text: "An error occured while updating your picture", severity: 'error' })
                     setSnackOpen(true);
                 }
                 else {
-                    console.log("y e s")
                     props.RefreshUser();
                     setResult({ ...result, text: 'Picture updated successfully!' })
                     setSnackOpen(true);

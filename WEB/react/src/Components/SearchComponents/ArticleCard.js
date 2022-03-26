@@ -25,7 +25,6 @@ function ParseElements(elements) {
     for (let index = 0; index < elements.length; index++) {
         const e = elements[index];
         if(e.componentName === "PARAGRAPH" ){
-            console.log("Found a paragraph")
             return (ParseParagraph(e));
         }
     }

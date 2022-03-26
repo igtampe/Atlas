@@ -14,13 +14,9 @@ export function ParseImageGrid(ImgGrid, Vertical) {
 }
 
 function ParseImageGridItem(GItem, Vertical){
-
-    console.log(GItem);
-
     return(
         <Grid item xs={Vertical ? GItem.width * 2: GItem.width}>
             {ParseImage(GItem)}
         </Grid>
     )
-
 }

@@ -28,7 +28,6 @@ export default function PicturePicker(props) {
 
     const FR = new FileReader();
     FR.addEventListener('load',(event)=>{
-      //console.log(event.target.result)
       
       setLoading(true)
       
@@ -44,7 +43,6 @@ export default function PicturePicker(props) {
           return response.text()
         }).then(data => {
           setLoading(false)
-          console.log(data)
           if(data.includes('-')){
             //Assume we got an ID
             props.setImageURL(APIURL + '/API/Images/' + data.substring(1).substring(0,data.length-2))

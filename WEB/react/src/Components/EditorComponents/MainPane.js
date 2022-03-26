@@ -1,7 +1,5 @@
-import { Edit } from '@mui/icons-material';
-import { Box, IconButton, Tab, Tabs, Tooltip, Typography } from '@mui/material';
+import { Box, Tab, Tabs, Typography } from '@mui/material';
 import React, { useState } from 'react';
-import { useHistory } from "react-router-dom";
 import { EditorPane } from './EditorPane';
 import { PreviewPane } from './PreviewPane';
 
