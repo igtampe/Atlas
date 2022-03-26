@@ -10,7 +10,7 @@ export function ParseFormattedText(FT) {
     }
 
     if(Boolean(FT.link)){
-        var link = FT.link.toLowerCase().startsWith("https://") ? FT.link : "/Article/" + FT.link
+        var link = FT.link.toLowerCase().startsWith("https://") || FT.link.toLowerCase().startsWith("http://") ? FT.link : "/Article/" + FT.link
         ReturnElement = <Link color='secondary' href={link}>{ReturnElement}</Link>
     }
     
