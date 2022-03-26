@@ -14,6 +14,9 @@ import Auth from './Components/Auth';
 import Article from './Components/Article';
 import { SearchComponent } from './Components/Search';
 import useQuery from './Components/Hooks/useQuery';
+import { ArticleEditor } from './Components/ArticleEditor';
+import { ArticleCreator } from './Components/ArticleCreator';
+import Admin from './Components/Admin';
 
 //Cookies should only really be accessed here.
 const cookies = new Cookies();
@@ -100,7 +103,7 @@ export default function App() {
         {Session
           ? <> {User
             ? <> {User.isAdmin
-              ? <>Admin component here</>
+              ? <Admin DarkMode={darkMode} Session={Session} InvalidSession={InvalidSession} setSession={SetSession} RefreshUser={RefreshUser} User={User} Vertical={Vertical} />
               : <>You do not have permission to access this resource</>} </>
             : <CenteredCircular />} </>
           : <Redirect to='/Login' />}
@@ -108,8 +111,11 @@ export default function App() {
       <Route path='/Search'>
         <SearchComponent query={query.get("query")}/>
       </Route>
-      <Route path='/NewArticle' children={
-        <PreArticleDisplay newArticle={true} DarkMode={darkMode} Session={Session} User={User} Vertical={Vertical} />
+      <Route path='/NewArticle'>
+        <ArticleCreator DarkMode={darkMode} Session={Session} User={User} Vertical={Vertical}/>
+      </Route>
+      <Route path='/EditArticle/:title' children={
+        <PreArticleDisplay editArticle={true} DarkMode={darkMode} Session={Session} User={User} Vertical={Vertical} />
       } />
       <Route path='/Article/:title' children={
         <PreArticleDisplay DarkMode={darkMode} Session={Session} User={User} Vertical={Vertical} />
@@ -122,6 +128,9 @@ export default function App() {
 
 function PreArticleDisplay(props) {
   let { title } = useParams();
+  if(props.editArticle){
+    return (<ArticleEditor {...props} title={title} />)  
+  }
   return (<Article {...props} title={title} />)
 }
 
