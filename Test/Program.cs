@@ -26,7 +26,10 @@ This should be a description that goes under the title and before the title, def
 ====And So on
 =====And So Forth
 I am the text from ""and so forth"". **This text should be bold**, *This text should be italicized* ***This text should be both bold and italicized***, and __***This text should be italicized, bold, and underlined***__. [This Text | Text] should link to a wiki page called ""Text"". [This Text | https://www.google.com] should link to google.
+
 This is a second paragraph.Here nothing is tested, beyond the fact that this is a separate paragraph.
+
+```Heck here's some code. What are you going to do, cry?```
 
 [IMG | This is the alt text | https://avatars.githubusercontent.com/u/49919240 | Another Chopo, oh god | LEFT]
 Oh my god there's a chopo on the left
