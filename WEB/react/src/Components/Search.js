@@ -23,7 +23,11 @@ export function SearchComponent(props) {
 
     }
 
-    if(!results && !loading) { GetArticles(setLoading,setArticles,props.query,displayed,20); }
+    const getMas= () => {
+        GetArticles(setLoading,setArticles,props.query,displayed,20);
+    }
+
+    if(!results && !loading) { getMas() }
 
     if (!results) {
         return (<>
