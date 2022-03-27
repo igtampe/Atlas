@@ -17,11 +17,13 @@ namespace Atlas.API.Controllers {
         /// <param name="Context"></param>
         public ImageController(AtlasContext Context) => DB = Context;
 
+        
+
         /// <summary>Gets an image from the DB</summary>
         /// <param name="ID">ID of the image to retrieve</param>
         /// <returns></returns>
         [HttpGet("{ID}")]
-        public async Task<IActionResult> GetImage(Guid ID) {
+        public async Task<IActionResult> GetImage([FromRoute]Guid ID) {
 
             Image? I = await DB.Image.FindAsync(ID);
             return I is null || I.Data is null || I.Type is null ? NotFound("Image was not found") : File(I.Data, I.Type);
@@ -32,7 +34,7 @@ namespace Atlas.API.Controllers {
         /// <returns></returns>
         // POST api/Images
         [HttpPost]
-        public async Task<IActionResult> UploadImage([FromHeader] Guid SessionID) {
+        public async Task<IActionResult> UploadImage([FromHeader] Guid SessionID, [FromQuery] string? Name, [FromQuery] string? Description) {
 
             //Check the session:
             Session? S = await Task.Run(() => SessionManager.Manager.FindSession(SessionID));
@@ -52,21 +54,15 @@ namespace Atlas.API.Controllers {
             if (ContentType != "image/png" && ContentType != "image/jpeg" && ContentType != "image/gif") { return BadRequest("File must be PNG, JPG, or GIF"); }
             if (Request.ContentLength > MaxSize) { return BadRequest("File must be less than 1mb in size"); }
 
-            Image I = new() { Type = ContentType };
+            Image I = new() { 
+                Name = Name ?? "", Description = Description ?? "",
+                Type = ContentType 
+            };
 
             using (var memoryStream = new MemoryStream()) {
                 await Request.Body.CopyToAsync(memoryStream);
                 I.Data = memoryStream.ToArray();
                 if (I.Data.Length > MaxSize) { return BadRequest("File must be less than 1mb in size"); }
-            }
-
-            if (!U.IsAdmin) {
-                //We will need to delete any existing photo, because non-admin users will only upload ONE picture: Their profile picture
-
-                //Get all existing images
-                var ImagesToDelete = await DB.Image.Where(I => I.Uploader!=null && I.Uploader.Username == U.Username).ToListAsync();
-                DB.RemoveRange(ImagesToDelete);
-
             }
 
             DB.Image.Add(I);
