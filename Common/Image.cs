@@ -13,6 +13,9 @@ namespace Atlas.Common {
         /// <summary>Person who uploaded this image</summary>
         public User? Uploader { get; set; }
 
+        /// <summary>Date this image was uploaded</summary>
+        public DateTime DateUploaded { get; set; }
+
         /// <summary>Name of this image</summary>
         public string Name { get; set; } = "";
 
