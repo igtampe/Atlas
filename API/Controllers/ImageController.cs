@@ -17,7 +17,24 @@ namespace Atlas.API.Controllers {
         /// <param name="Context"></param>
         public ImageController(AtlasContext Context) => DB = Context;
 
-        
+        /// <summary>Gets a list of all articles on this Atlas server</summary>
+        /// <param name="Query">Search query to search in IDs and </param>
+        /// <param name="Take"></param>
+        /// <param name="Skip"></param>
+        /// <returns></returns>
+        [HttpGet]
+        public async Task<IActionResult> Directory([FromQuery] string? Query, [FromQuery] int? Take, [FromQuery] int? Skip) {
+            IQueryable<Image> Set = DB.Image;
+
+            if (!string.IsNullOrWhiteSpace(Query)) {
+                Query = Query.ToLower();
+                Set = Set.Where(A => A.Name.ToLower().Contains(Query));
+            }
+
+            Set = Set.OrderByDescending(A => A.DateUploaded).Skip(Skip ?? 0).Take(Take ?? 20);
+
+            return Ok(await Set.ToListAsync());
+        }
 
         /// <summary>Gets an image from the DB</summary>
         /// <param name="ID">ID of the image to retrieve</param>
