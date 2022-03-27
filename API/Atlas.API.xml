@@ -56,12 +56,19 @@
             <summary>Creates a User Controller</summary>
             <param name="Context"></param>
         </member>
+        <member name="M:Atlas.API.Controllers.ImageController.Directory(System.String,System.Nullable{System.Int32},System.Nullable{System.Int32})">
+            <summary>Gets a list of all articles on this Atlas server</summary>
+            <param name="Query">Search query to search in IDs and </param>
+            <param name="Take"></param>
+            <param name="Skip"></param>
+            <returns></returns>
+        </member>
         <member name="M:Atlas.API.Controllers.ImageController.GetImage(System.Guid)">
             <summary>Gets an image from the DB</summary>
             <param name="ID">ID of the image to retrieve</param>
             <returns></returns>
         </member>
-        <member name="M:Atlas.API.Controllers.ImageController.UploadImage(System.Guid)">
+        <member name="M:Atlas.API.Controllers.ImageController.UploadImage(System.Guid,System.String,System.String)">
             <summary>Uploads an Image to the DB.</summary>
             <param name="SessionID">ID of the session executing this request</param>
             <returns></returns>
