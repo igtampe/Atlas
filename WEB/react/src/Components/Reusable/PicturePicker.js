@@ -3,11 +3,9 @@ import {
   Dialog, DialogActions, DialogContent, DialogTitle,
   CircularProgress, Button, TextField, Box
 } from "@mui/material";
-import Cookies from 'universal-cookie';
 import { APIURL } from "../../API/common";
 import AlertSnackbar from "./AlertSnackbar";
-
-const cookies = new Cookies();
+import { UploadImage } from "../../API/Image";
 
 export default function PicturePicker(props) {
 
@@ -21,48 +19,27 @@ export default function PicturePicker(props) {
   const [result, setResult] = useState({ severity: "success", text: "idk" })
   const [SnackOpen, setSnackOpen] = useState(false);
 
+  const onSuccess = (data) => {
+    setResult({severity:'success', text:'Image uploaded!'})
+    setSnackOpen(true)
+
+    props.setImageURL(APIURL + '/API/Images/' + data.id)
+    handleClose();
+  }
+
+  const onError = (error) => {
+    setResult({severity:'danger', text:error})
+    setSnackOpen(true)
+
+  }
+
   const handleUpload = (event) => {
     
     //This will probably make some react developer cry.
     //but it WORKS (Who knows ow slow it is though)
 
-    const FR = new FileReader();
-    FR.addEventListener('load',(event)=>{
-      
-      setLoading(true)
-      
-      const requestOptions = {
-        method: 'POST',
-        headers: { 'Content-Type': file.type, 'Content-Length':file.size, 'SessionID': cookies.get('SessionID') },
-        body: event.target.result
-      };
-  
-      fetch(APIURL + "/API/Images", requestOptions)
-        .then(response => {
-          if (!response.ok) { console.error(response); }
-          return response.text()
-        }).then(data => {
-          setLoading(false)
-          if(data.includes('-')){
-            //Assume we got an ID
-            props.setImageURL(APIURL + '/API/Images/' + data.substring(1).substring(0,data.length-2))
-            handleClose();
-            setResult({severity:'success', text:'Image uploaded!'})
-            setSnackOpen(true)
-          } else {
-            //There's been a problem
-            setResult({severity:'danger', text:data})
-            setSnackOpen(true)
-          }
-        })
-        .catch( e => {
-          setLoading(false)
-          setResult({severity:'danger', text:'An error occurred when sending the data over'})
-          setSnackOpen(true)}
-        )
-    })
+    UploadImage(setLoading,props.Session,file,file.name,"File uploaded by the picture picker", onSuccess, onError)
 
-    FR.readAsArrayBuffer(file)
   }
 
   const handleOK = (event) => {
