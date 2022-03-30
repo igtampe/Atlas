@@ -8,6 +8,7 @@
     <GenerateDocumentationFile>True</GenerateDocumentationFile>
     <AssemblyName>Atlas.$(MSBuildProjectName)</AssemblyName>
     <DocumentationFile>./Atlas.API.xml</DocumentationFile>
+	<RuntimeIdentifiers>win10-x64;linux-x64</RuntimeIdentifiers>
   </PropertyGroup>
 
   <ItemGroup>
