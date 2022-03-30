@@ -1,3 +1,7 @@
+using Atlas.API;
+using Atlas.Data;
+using Microsoft.AspNetCore.SpaServices;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
@@ -6,6 +10,8 @@ builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+
+builder.Services.AddDbContext<AtlasContext>();
 
 var app = builder.Build();
 
@@ -20,5 +26,9 @@ app.UseHttpsRedirection();
 app.UseAuthorization();
 
 app.MapControllers();
+
+app.UseStaticFiles();
+app.UseSpa(SPA => {
+});
 
 app.Run();
