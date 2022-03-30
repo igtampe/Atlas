@@ -1,5 +1,5 @@
 //The API URL. Either the one provided by the environment variable, or the default
-export const APIURL = process.env.APIURL ?? 'https://localhost:7004';
+export const APIURL = !process.env.NODE_ENV || process.env.NODE_ENV === 'development' ? 'https://localhost:7004' : '';
 const EmptyGUID = ""
 
 export const GenerateJSONPost = (SessionID, Body) => {
