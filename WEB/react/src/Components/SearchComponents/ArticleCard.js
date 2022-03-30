@@ -1,6 +1,6 @@
 import { Card, CardContent, Divider, Link } from '@mui/material';
 import React from 'react';
-import { ParseImage } from '../ArticleComponents/TextComponents/ImageBox';
+import { APIURL } from '../../API/common';
 import { ParseParagraph } from '../ArticleComponents/TextComponents/Paragraph';
 
 export default function ArticleCard(Article) {
@@ -61,7 +61,10 @@ function GetFirstSidebarImage(elements) {
 }
 
 function ArticleImage(props){
+    let src = props.imageurl;
+    if (!src.startsWith("ht") && !src.startsWith("i")) { src = APIURL + "/API/Images/" + src }
+
     return (<a href={props.imageurl}>
-        <img src={props.imageurl} alt={props.alt} width='75%' height='75%' style={{ objectFit: 'cover' }} />
+        <img src={src} alt={props.alt} width='75%' height='75%' style={{ objectFit: 'cover' }} />
     </a>)
 }
