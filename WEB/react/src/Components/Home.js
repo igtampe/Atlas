@@ -11,7 +11,7 @@ export default function Home(props) {
                 <Grid item xs={12}>
                     <Container style={props.DarkMode ? { backgroundColor: '#444444', padding: '50px' } : { backgroundColor: '#ebebeb', padding: '50px' }}>
                         <Typography>
-                            <Typography variant="h6" style={{ textAlign: "center", marginBottom:'10px' }}> <img src="Logo.png" alt="Logo" width="300px" /> </Typography>
+                            <Typography variant="h6" style={{ textAlign: "center", marginBottom:'10px' }}> <img src="logo.png" alt="Logo" width="300px" /> </Typography>
                             <SearchField/>
                         </Typography>
                     </Container>
