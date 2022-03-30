@@ -1,23 +1,12 @@
-import { GenerateGet, GenerateJSONPut, APIURL, GenerateDelete } from "./common";
+import React from "react";
+import { GenerateGet, APIURL, GenerateDelete } from "./common";
 
 export const GetImages = (setLoading, setImages, Query, Skip, Take) => {
 
     setLoading(true);
 
-    //Build the Query
-    var append = undefined;
-    if (Boolean(Query)) { append = "?Query=" + Query }
-    if (Boolean(Skip)) {
-        if (!append) { append += "?" } else { append += "&" }
-        append += append + "Skip=" + Skip
-    }
-    if (Boolean(Take)) {
-        if (!append) { append += "?" } else { append += "&" }
-        append += append + "Take=" + Take
-    }
-
     //Fetch
-    fetch(APIURL + "/API/Images" + append, GenerateGet(null))
+    fetch(APIURL + "/API/Images?Query=" + Query + "&Skip=" + Skip + "&Take=" + Take, GenerateGet(null))
         .then(response => { return response.json() }).then(data => {
 
             //Remember to check for errors and set errors if needed
@@ -46,39 +35,40 @@ export const GetImageInfo = (setLoading, ID, setImage, setError) => {
             setLoading(false)
 
         })
+}
 
+export const APIImage = (props) => {
+    if(props.image){ return(<img src={APIURL + '/API/Images/' + props.image.id} {...props}/>) }
+    if(props.id){ return(<img src={APIURL + '/API/Images/' + props.id} {...props}/>) }    
+    return(<img src={'icons/images.png'} {...props}/>)
 }
 
 export const UploadImage = (setLoading, Session, file, name, description, onSuccess, onError) => {
 
     setLoading(true);
+
     const FR = new FileReader();
-    FR.addEventListener('load',(event)=>{
-      
-      setLoading(true)
-      
-      const requestOptions = {
-        method: 'POST',
-        headers: { 'Content-Type': file.type, 'Content-Length':file.size, 'SessionID': Session },
-        body: event.target.result
-      };
-  
-      fetch(APIURL + "/API/Images?Name=" + name + "&Description=" + description, requestOptions)
-        .then(response => response.json() ).then(data => {
+    FR.addEventListener('load', (event) => {
+        setLoading(true)
 
-          setLoading(false)
-        //Remember to check for errors and set errors if needed
-            if (data.error || data.errors) {
-                onError(data.reason ?? "An unknown serverside error occurred");
-                return;
-            }
+        const requestOptions = {
+            method: 'POST',
+            headers: { 'Content-Type': file.type, 'Content-Length': file.size, 'SessionID': Session },
+            body: event.target.result
+        };
 
-            onSuccess(data)
-        })
-        .catch( e => {
-          setLoading(false)
-          onError("Something happened")}
-        )
+        fetch(APIURL + "/API/Images?Name=" + name + "&Description=" + description, requestOptions)
+            .then(response => response.json()).then(data => {
+
+                setLoading(false)
+                //Remember to check for errors and set errors if needed
+                if (data.error || data.errors) {
+                    onError(data.reason ?? "An unknown serverside error occurred");
+                    return;
+                }
+
+                onSuccess(data)
+            })
     })
 
     FR.readAsArrayBuffer(file)
