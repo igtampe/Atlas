@@ -17,6 +17,8 @@ import useQuery from './Components/Hooks/useQuery';
 import { ArticleEditor } from './Components/ArticleEditor';
 import { ArticleCreator } from './Components/ArticleCreator';
 import Admin from './Components/Admin';
+import ImageViewer from './Components/ImageViewer';
+import ImageBrowser from './Components/ImageBrowser';
 
 //Cookies should only really be accessed here.
 const cookies = new Cookies();
@@ -93,43 +95,55 @@ export default function App() {
     <ThemeProvider theme={darkMode ? darkTheme : lightTheme}>
       <CssBaseline />
       <Layout DarkMode={darkMode} ToggleDarkMode={ToggleDarkMode} Session={Session} InvalidSession={InvalidSession} setSession={SetSession} RefreshUser={RefreshUser} User={User} Vertical={Vertical}>
-      <Route exact path='/'>
-        <Home DarkMode={darkMode} Session={Session} InvalidSession={InvalidSession} setSession={SetSession} RefreshUser={RefreshUser} User={User} Vertical={Vertical} />
-      </Route>
-      <Route path='/Login'>
-        {Session ? <Redirect to='/' /> : <Auth DarkMode={darkMode} />}
-      </Route>
-      <Route path='/Admin'>
-        {Session
-          ? <> {User
-            ? <> {User.isAdmin
-              ? <Admin DarkMode={darkMode} Session={Session} InvalidSession={InvalidSession} setSession={SetSession} RefreshUser={RefreshUser} User={User} Vertical={Vertical} />
-              : <>You do not have permission to access this resource</>} </>
-            : <CenteredCircular />} </>
-          : <Redirect to='/Login' />}
-      </Route>
-      <Route path='/Search'>
-        <SearchComponent query={query.get("query")}/>
-      </Route>
-      <Route path='/NewArticle'>
-        <ArticleCreator DarkMode={darkMode} Session={Session} User={User} Vertical={Vertical}/>
-      </Route>
-      <Route path='/EditArticle/:title' children={
-        <PreArticleDisplay editArticle={true} DarkMode={darkMode} Session={Session} User={User} Vertical={Vertical} />
-      } />
-      <Route path='/Article/:title' children={
-        <PreArticleDisplay DarkMode={darkMode} Session={Session} User={User} Vertical={Vertical} />
-      } />
-      <Footer />
+        <Route exact path='/'>
+          <Home DarkMode={darkMode} Session={Session} InvalidSession={InvalidSession} setSession={SetSession} RefreshUser={RefreshUser} User={User} Vertical={Vertical} />
+        </Route>
+        <Route path='/Login'>
+          {Session ? <Redirect to='/' /> : <Auth DarkMode={darkMode} />}
+        </Route>
+        <Route path='/Admin'>
+          {Session
+            ? <> {User
+              ? <> {User.isAdmin
+                ? <Admin DarkMode={darkMode} Session={Session} InvalidSession={InvalidSession} setSession={SetSession} RefreshUser={RefreshUser} User={User} Vertical={Vertical} />
+                : <>You do not have permission to access this resource</>} </>
+              : <CenteredCircular />} </>
+            : <Redirect to='/Login' />}
+        </Route>
+        <Route path='/Search'>
+          <SearchComponent query={query.get("query")} />
+        </Route>
+        <Route path='/NewArticle'>
+          <ArticleCreator DarkMode={darkMode} Session={Session} User={User} Vertical={Vertical} />
+        </Route>
+        <Route path='/EditArticle/:title' children={
+          <PreArticleDisplay editArticle={true} DarkMode={darkMode} Session={Session} User={User} Vertical={Vertical} />
+        } />
+        <Route path='/Article/:title' children={
+          <PreArticleDisplay DarkMode={darkMode} Session={Session} User={User} Vertical={Vertical} />
+        } />
+        <Route path='/Images' children={
+          <ImageBrowser DarkMode={darkMode} Session={Session} User={User} Vertical={Vertical} />
+        } />
+        <Route path='/Image/:id' children={
+          <PreImageDisplay DarkMode={darkMode} Session={Session} User={User} Vertical={Vertical} />
+        } />
+        <Footer />
       </Layout>
     </ThemeProvider>
   );
 }
 
+function PreImageDisplay(props) {
+  let { id } = useParams();
+  return (<ImageViewer {...props} id={id} />)
+}
+
+
 function PreArticleDisplay(props) {
   let { title } = useParams();
-  if(props.editArticle){
-    return (<ArticleEditor {...props} title={title} />)  
+  if (props.editArticle) {
+    return (<ArticleEditor {...props} title={title} />)
   }
   return (<Article {...props} title={title} />)
 }
