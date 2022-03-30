@@ -68,9 +68,20 @@
             <param name="ID">ID of the image to retrieve</param>
             <returns></returns>
         </member>
+        <member name="M:Atlas.API.Controllers.ImageController.GetImageInfo(System.Guid)">
+            <summary>Gets information on an image</summary>
+            <param name="ID"></param>
+            <returns></returns>
+        </member>
         <member name="M:Atlas.API.Controllers.ImageController.UploadImage(System.Guid,System.String,System.String)">
             <summary>Uploads an Image to the DB.</summary>
             <param name="SessionID">ID of the session executing this request</param>
+            <returns></returns>
+        </member>
+        <member name="M:Atlas.API.Controllers.ImageController.Delete(System.Guid,System.Guid)">
+            <summary>Deletes an image from the DB</summary>
+            <param name="SessionID">ID of the session executing this request</param>
+            <param name="ID">ID of the image to delete</param>
             <returns></returns>
         </member>
         <member name="T:Atlas.API.Controllers.UserController">
