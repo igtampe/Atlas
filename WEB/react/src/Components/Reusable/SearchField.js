@@ -18,7 +18,7 @@ export default function SearchField(props) {
 
     return (<table style={{width:'100%'}}>
         <tr>
-            <td> <TextField placeholder="Search" value={query} 
+            <td> <TextField placeholder="Search Articles" value={query} 
                 onKeyDown={(e)=>{if(e.key==='Enter'){launchSearch()}}}
                 onChange={(event)=>{setQuery(event.target.value)}} fullWidth/> </td>
             <td width={1}> 
