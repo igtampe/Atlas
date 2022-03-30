@@ -45,6 +45,12 @@ namespace Atlas.Common.ArticleComponents {
 
             //Split this into two by using the mighty power of the split command
             string[] LinkSplit = Text.Split('|');
+            
+            if (LinkSplit.Length == 1) {
+                //This is a link to a page on the wiki with the same name
+                return new($"{LinkSplit[0].Trim()}") { Bold = Bold, Italic = Italic, Underline = Underline, Link = LinkSplit[0].Trim() };
+            }
+
             if (LinkSplit.Length != 2) {
                 //there's been a problem. Return the text unformatted (with the [])
                 return new($"[{Text}]") { Bold=Bold, Italic=Italic, Underline=Underline};
