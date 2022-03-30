@@ -86,9 +86,9 @@ namespace Atlas.API.Controllers {
                 return BadRequest(ErrorResult.BadRequest("File must be less than 1mb in size")); 
             }
 
-            Image I = new() { 
+            Image I = new() {
                 Name = Name ?? "", Description = Description ?? "",
-                Type = ContentType 
+                Type = ContentType, Uploader = U, DateUploaded = DateTime.UtcNow
             };
 
             using (var memoryStream = new MemoryStream()) {
