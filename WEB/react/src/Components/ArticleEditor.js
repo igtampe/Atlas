@@ -57,7 +57,7 @@ export function ArticleEditor(props) {
     }
 
     return(<>
-        <div style={{ fontSize: 35 }}>Editing new article {props.title}</div>
+        <div style={{ fontSize: 35 }}>Editing article {props.title}</div>
         <Divider/><br/>
         <MainPane Session={props.Session} title={props.title} text={text} setText={setText} preview={preview} setPreview={setPreview}/>
         <br/>
