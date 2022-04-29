@@ -18,15 +18,17 @@ It doesn't use any normal markup language, instead using a basic markdown-esque 
 - ```
     # Numbered Lists
         # With subitems
-- ```
+```
 |I|Image Grids with varying widths (trailing "|2")
 [IMG | This is the alt text | https://avatars.githubusercontent.com/u/49919240 | HA HA HA | 2]
 [IMG | This is the alt text | https://avatars.githubusercontent.com/u/49919240 | HA HA HA | 2]
-- ```
+```
+``` 
 || Tables with titles
 |and a header| row
 | with other  | fields |
-- ```> Sidebar section comprised of any elements > ``` (Only one)
+```
+- ```> Sidebar section comprised of any elements >``` (Only one)
 
 
 ### Sample
